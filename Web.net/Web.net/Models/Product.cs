@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace API.Net.Models;
@@ -47,7 +48,13 @@ public partial class Product
 
         double discount = percent*Price;
 
-        return  Price - discount;
+        return   Price - discount;
+      
+    }
+    public  string FormatPrice(double price)
+    {
+        // Định dạng giá theo văn hóa Việt Nam
+        return Price.ToString("C0", CultureInfo.GetCultureInfo("vi-VN"));
     }
 
 

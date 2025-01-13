@@ -3,16 +3,17 @@
     ViewData["Title"] = "Home Page";
 }
 @{
-    List<Product> productDate = (List<Product>)ViewBag.ProductsDate;
+    List<Product> productDate = (List<Product>)ViewBag.FlashSales;
     List<Product> productsPrice = (List<Product>)ViewBag.ProductsPrice;
 
-    List<Product> productsBestSeller = (List<Product>)ViewBag.ProductsBestSeller;
+    List<Product> productsBestSeller = (List<Product>)ViewBag.topSell;
 
 
 
 }
 
 <div class="body_home">
+
 
     <div class="main_container">
 
@@ -46,10 +47,17 @@
                      alt="">
             </div>
 
+            @foreach (var item in ViewBag.listCate)
+            {
+                <a class="category_item" href="productSearch.html">
+                    <img src="@item.Thumbnail" alt="thumbnail">
+                    <p>@item.Name</p>
+                </a>
 
+            }
             <a class="category_item" href="productSearch.html">
                 <img src="./assets/images/category/banlamviec.png" alt="">
-                <p>Bàn làm việc</p>
+                <p>Tất cả sản phẩm</p>
             </a>
            
 
@@ -74,7 +82,7 @@
             <div class="product_list">
                 @foreach (var pro in productDate)
                 {
-                    <div class="product_card" >
+                    <div class="product_card" onclick="goToProDetail('@pro.ProductId')">
                         <div class="card_image">
                             <img src="@pro.Thumbnail" />
                         </div>
@@ -82,10 +90,10 @@
                             <h4>@pro.Name</h4>
                         </div>
 
-                        <p class="card_price-show">@pro.getPriceAfterDiscount() đ</p>
+                        <p class="card_price-show"> @pro.FormatPrice(@pro.getPriceAfterDiscount()) </p>
 
                         <div class="card_price-discount">
-                            <p class="card_price-through">@pro.Price đ</p>
+                            <p class="card_price-through">@pro.FormatPrice(@pro.Price) </p>
                             <b>@pro.DiscountDefault %</b>
                         </div>
 
@@ -129,9 +137,9 @@
 
             </div>
             <div class="product_list sale_list">
-                @foreach(var p in productsBestSeller)
+                @foreach (var p in ViewBag.topSell)
                 {
-                    <div class="product_card" >
+                    <div class="product_card" onclick="goToProDetail('@p.ProductId')" >
                         <div class="card_image">
                             <img src="@p.Thumbnail"
                                  alt="product">
@@ -140,10 +148,10 @@
                             <h4>@p.Name</h4>
                         </div>
 
-                        <p class="card_price-show">@p.getPriceAfterDiscount() đ</p>
+                        <p class="card_price-show"> @p.FormatPrice(@p.getPriceAfterDiscount()) </p>
 
                         <div class="card_price-discount">
-                            <p class="card_price-through">@p.Price đ</p>
+                            <p class="card_price-through">@p.FormatPrice(@p.Price) </p>
                             <b>@p.DiscountDefault %</b>
                         </div>
 
@@ -178,14 +186,14 @@
         </div>
         <div class="block_product bg-while">
             <div class="product_list_title">
-                <h3>Sản phẩm gia cao</h3>
+                <h3>Full Combo Nội Thất</h3>
 
 
             </div>
             <div class="product_list sale_list">
                 @foreach(var p in productsPrice)
                 {
-                    <div class="product_card">
+                    <div class="product_card" onclick="goToProDetail('@p.ProductId')">
                         <div class="card_image">
                             <img src="@p.Thumbnail"
                                  alt="product">
@@ -194,10 +202,10 @@
                             <h4>@p.Name</h4>
                         </div>
 
-                        <p class="card_price-show">@p.getPriceAfterDiscount() đ</p>
+                        <p class="card_price-show"> @p.FormatPrice(@p.getPriceAfterDiscount()) </p>
 
                         <div class="card_price-discount">
-                            <p class="card_price-through">@p.Price đ</p>
+                            <p class="card_price-through">@p.FormatPrice(@p.Price) </p>
                             <b>@p.DiscountDefault %</b>
                         </div>
 
@@ -218,8 +226,8 @@
                             </div>
 
                         </div>
-
                     </div>
+                  
 
                 }
 
@@ -315,6 +323,14 @@
             });
         });
 
+   </script>
+   <script>
+    function    goToProDetail(id){
+                     var url = "/Products/Detail/"+id;
+        window.location.href = url;
+
+
+        }
    </script>
 }
 

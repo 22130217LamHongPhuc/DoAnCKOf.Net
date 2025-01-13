@@ -10,8 +10,6 @@ namespace Web.net.Controllers
     public class CartController : Controller
     {
 
-
-
         public IActionResult getCart()
 
         {

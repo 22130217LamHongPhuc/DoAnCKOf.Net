@@ -8,6 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpClient<ProductService>();
 builder.Services.AddHttpClient<OrderService>();
 builder.Services.AddHttpClient<VoucherService>();
+builder.Services.AddHttpClient<HomeService>();
+builder.Services.AddHttpClient<SearchSevice>()
+    .ConfigurePrimaryHttpMessageHandler(() =>
+    {
+        var handler = new HttpClientHandler();
+        handler.ServerCertificateCustomValidationCallback =
+            (message, cert, chain, errors) => true; // Bỏ qua xác thực chứng chỉ
+        return handler;
+    });
+
 
 
 
@@ -18,6 +28,15 @@ builder.Services.AddSession(options =>
 
 );
 builder.Services.AddControllersWithViews();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 
 var app = builder.Build();
@@ -32,6 +51,8 @@ if (!app.Environment.IsDevelopment())
 
 
 
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -43,5 +64,6 @@ app.UseSession();  // Kích hoạt session
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();

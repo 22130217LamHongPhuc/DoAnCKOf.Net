@@ -1,0 +1,336 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADMIN</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <script src="https://kit.fontawesome.com/68512d5542.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+
+    <!-- css data table -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+
+</head>
+
+<body>
+    <div class="wrapper">
+
+        <!-- phần main -->
+        <div class="container orders-container">
+
+            <!-- Hai nút thêm và xem sản phẩm đã xóa -->
+            <div class="row button-center-container">
+                <div class="col-md-6 button-left">
+                    <button class="btn btn-light btn-primary" id="btn-add">
+                        <a href="addNewPage.html"
+                           style="color: #fff;">Thêm Tin Tức</a>
+                    </button>
+                </div>
+                <!-- <div class="col-md-6 button-right d-flex justify-content-end align-items-end">
+                 <button class="btn btn-light btn-primary align-items-end" id="btn-view-deleted">
+                     <a href="#####" style="color: #fff;">
+                     Số Sản Phẩm Đã Xóa:
+                     <div class="products-deleted badge bg-danger">10</div>
+                     </a>
+                 </button>
+                </div> -->
+            </div>
+
+            <!-- phần danh sách sản phẩm -->
+            <div class="row table-container">
+                <div class="col-12">
+                    <table class="table table-bordered table-striped" id="list">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>STT</th>
+                                <th>Tiêu Đề</th>
+                                <th>Ngày Tạo</th>
+                                <th>Ảnh</th>
+                                <th>Nội Dung</th>
+                                <th>Tùy Chọn</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dữ liệu giả -->
+                            <tr>
+                                <td>1</td>
+                                <td>Tin Tức Mới 1</td>
+                                <td>2024-11-25</td>
+                                <td>
+                                    <img src="../assets/images/admin/anhtin.jpg" alt="Image"
+                                         style="width: 50px; height: 50px;">
+                                </td>
+                                <td>Đây là nội dung tin tức 1. Nội dung ngắn gọn về tin tức này.</td>
+                                <td>
+
+                                    <a href="editArticlePage.html">
+                                        <button class="btn btn-warning btn-sm">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                    </a>
+                                    <button class="btn btn-danger btn-sm btn-delete">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Tin Tức Mới 2</td>
+                                <td>2024-11-26</td>
+                                <td>
+                                    <img src="../assets/images/admin/anhtin.jpg" alt="Image"
+                                         style="width: 50px; height: 50px;">
+                                </td>
+                                <td>Đây là nội dung tin tức 2. Nội dung chi tiết hơn về tin tức thứ hai này.</td>
+                                <td>
+
+                                    <a href="editArticlePage.html">
+                                        <button class="btn btn-warning btn-sm">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                    </a>
+                                    <button class="btn btn-danger btn-sm btn-delete">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Tin Tức Mới 3</td>
+                                <td>2024-11-27</td>
+                                <td>
+                                    <img src="../assets/images/admin/anhtin.jpg" alt="Image"
+                                         style="width: 50px; height: 50px;">
+                                </td>
+                                <td>Đây là nội dung tin tức 3. Thông tin về sự kiện mới nhất được cập nhật.</td>
+                                <td>
+
+                                    <a href="editArticlePage.html">
+                                        <button class="btn btn-warning btn-sm">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                    </a>
+                                    <button class="btn btn-danger btn-sm btn-delete">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Tin Tức Mới 4</td>
+                                <td>2024-11-28</td>
+                                <td>
+                                    <img src="../assets/images/admin/anhtin.jpg" alt="Image"
+                                         style="width: 50px; height: 50px;">
+                                </td>
+                                <td>Đây là nội dung tin tức 4. Một tin tức quan trọng về sự kiện quốc tế.</td>
+                                <td>
+
+                                    <a href="editArticlePage.html">
+                                        <button class="btn btn-warning btn-sm">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                    </a>
+                                    <button class="btn btn-danger btn-sm btn-delete">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Tin Tức Mới 5</td>
+                                <td>2024-11-29</td>
+                                <td>
+                                    <img src="../assets/images/admin/anhtin.jpg" alt="Image"
+                                         style="width: 50px; height: 50px;">
+                                </td>
+                                <td>Đây là nội dung tin tức 5. Cập nhật mới nhất về các xu hướng thị trường.</td>
+                                <td>
+
+                                    <a href="editArticlePage.html">
+                                        <button class="btn btn-warning btn-sm">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                    </a>
+                                    <button class="btn btn-danger btn-sm btn-delete">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Tin Tức Mới 6</td>
+                                <td>2024-11-30</td>
+                                <td>
+                                    <img src="../assets/images/admin/anhtin.jpg" alt="Image"
+                                         style="width: 50px; height: 50px;">
+                                </td>
+                                <td>Đây là nội dung tin tức 6. Sự kiện thể thao đáng chú ý trong tuần này.</td>
+                                <td>
+
+                                    <a href="editArticlePage.html">
+                                        <button class="btn btn-warning btn-sm">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                    </a>
+                                    <button class="btn btn-danger btn-sm btn-delete">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>Tin Tức Mới 7</td>
+                                <td>2024-11-30</td>
+                                <td>
+                                    <img src="../assets/images/admin/anhtin.jpg" alt="Image"
+                                         style="width: 50px; height: 50px;">
+                                </td>
+                                <td>Đây là nội dung tin tức 7. Phân tích về các sự kiện chính trị trong tuần.</td>
+                                <td>
+
+                                    <a href="editArticlePage.html">
+                                        <button class="btn btn-warning btn-sm">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                    </a>
+                                    <button class="btn btn-danger btn-sm btn-delete">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td>Tin Tức Mới 8</td>
+                                <td>2024-11-25</td>
+                                <td>
+                                    <img src="../assets/images/admin/anhtin.jpg" alt="Image"
+                                         style="width: 50px; height: 50px;">
+                                </td>
+                                <td>Đây là nội dung tin tức 8. Những thay đổi trong chính sách của các công ty lớn.</td>
+                                <td>
+
+                                    <a href="editArticlePage.html">
+                                        <button class="btn btn-warning btn-sm">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                    </a>
+                                    <button class="btn btn-danger btn-sm btn-delete">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td>Tin Tức Mới 9</td>
+                                <td>2024-11-29</td>
+                                <td>
+                                    <img src="../assets/images/admin/anhtin.jpg" alt="Image"
+                                         style="width: 50px; height: 50px;">
+                                </td>
+                                <td>Đây là nội dung tin tức 9. Những câu chuyện hấp dẫn về doanh nhân nổi bật.</td>
+                                <td>
+
+                                    <a href="editArticlePage.html">
+                                        <button class="btn btn-warning btn-sm">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                    </a>
+                                    <button class="btn btn-danger btn-sm btn-delete">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>Tin Tức Mới 10</td>
+                                <td>2024-11-30</td>
+                                <td>
+                                    <img src="../assets/images/admin/anhtin.jpg" alt="Image"
+                                         style="width: 50px; height: 50px;">
+                                </td>
+                                <td>Đây là nội dung tin tức 10. Tin tức về công nghệ mới nhất và xu hướng AI.</td>
+                                <td>
+
+                                    <a href="editArticlePage.html">
+                                        <button class="btn btn-warning btn-sm">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                    </a>
+                                    <button class="btn btn-danger btn-sm btn-delete">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Phần modal popup thông báo xác nhận xóa -->
+    <!-- Modal xác nhận xóa -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Xác Nhận Xóa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc chắn muốn xóa đơn hàng này không?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Đồng Ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Phần modal popup thông báo xác nhận đơn hàng -->
+    <!-- Modal xác nhận đơn hàng -->
+    <div class="modal fade" id="confirmOrderModal" tabindex="-1" aria-labelledby="confirmOrderModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmOrderModalLabel">Xác Nhận Đơn Hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc chắn muốn xác nhận đơn hàng này không?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-success" id="confirmOrderBtn">Xác Nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#list').DataTable();
+        });
+    </script>
+    <!-- Thêm Popper.js và Bootstrap JS Bundle cho các tính năng JavaScript của Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/scriptAdmin.js"></script>
+</body>
+
+</html>
