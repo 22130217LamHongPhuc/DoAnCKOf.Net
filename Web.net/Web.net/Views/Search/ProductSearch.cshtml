@@ -1,6 +1,10 @@
 ﻿@{
-	Layout = null;  // Tắt layout cho trang này
+	Layout = null;
+	var productList = ViewBag.Product ;
+		var productCount = ViewBag.Product;  // Kiểm tra và gán số phần tử trong danh sách
+	// Tắt layout cho trang này
 }
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,74 +44,7 @@
 
 
 		<!-- HEADER  -->
-		<div class="header">
-			<div class="header_main">
-
-
-				<div class="header_logo">
-					<a href="index.html"><img src="./assets/images/logo/logo-final (3) (1).png" alt="logo"> </a>
-				</div>
-				<div href="" class="header_item item_category " onclick="openCategory()">
-
-					<div class="item_box ">
-						<i class="fa-solid fa-bars"></i>
-					</div>
-					<div class="item_content">
-						<p>Danh mục</p>
-					</div>
-
-				</div>
-
-				<div class="header_search">
-					<button type="submit" class="search_box search_box_color">
-						<i class="fa-solid fa-magnifying-glass"></i>
-
-					</button>
-
-					<input type="text" class="search_input " id="keySearch" value="@ViewBag.key" placeholder="Bạn tìm gì...">
-
-
-				</div>
-
-				<!-- item header -->
-
-				<a href="cart.html" class="header_item">
-					<div class="item_box ">
-						<i class="fa-solid fa-cart-shopping"></i>
-					</div>
-					<div class="item_content">
-						<p>Giỏ hàng</p>
-					</div>
-				</a>
-
-				<a href="login.html" class="header_item">
-
-					<div class="item_box ">
-						<i class="fa-regular fa-user color-while"></i>
-					</div>
-					<div class="item_content">
-						<p>Đăng nhập</p>
-					</div>
-
-				</a>
-				<a href="storeAddress.html" class="header_address ">
-					<div class="address_alpha">
-						<div class="item_box ">
-							<i class="fa-solid fa-location-dot"></i>
-						</div>
-						<div class="item_content">
-							<p>Tp. Hồ Chí Minh</p>
-						</div>
-					</div>
-
-					<div class="item_box address_beta ">
-						<i class="fa-solid fa-angle-right"></i>
-					</div>
-				</a>
-
-
-			</div>
-		</div>
+		@Html.Partial("_Header")
 
 
 		<div class="body_home">
@@ -153,7 +90,8 @@
 					<div class="product_list sale_list">
 						@if (!string.IsNullOrEmpty(ViewBag.Message as string))
 						{
-							<p>@ViewBag.Message</p>
+							<p style="color: brown">@ViewBag.Message</p>
+
 						}
 
 						@if (ViewBag.Product != null)
@@ -204,12 +142,24 @@
 
 					</div>
 
-
-					<div class="see_more-product">
-						<div class="btn_rate buy_now view_more" onclick="loadMoreProduct()">
-							<p>Xem thêm sản phẩm</p>
+					@if (!string.IsNullOrEmpty(ViewBag.Message as string) || @ViewBag.Product.Count < 20)
+					{
+						<div class="see_more-product" id="see_more-product" style="display:none">
+							<div class="btn_rate buy_now view_more" onclick="loadMoreProduct()">
+								<p>Xem thêm sản phẩm</p>
+							</div>
 						</div>
-					</div>
+
+					}
+					else
+					{
+						<div class="see_more-product" id="see_more-product">
+							<div class="btn_rate buy_now view_more" onclick="loadMoreProduct()">
+								<p>Xem thêm sản phẩm</p>
+							</div>
+						</div>
+					}
+					
 
 				</div>
 			</div>
@@ -217,84 +167,7 @@
 
 
 		<!-- footer  -->
-		<div class="footer">
-			<div class="footer-top">
-				<div class="newsletter">
-					<p>Đăng ký nhận tin</p>
-					<div class="newsletter-input">
-						<input type="email" placeholder="Nhập email của bạn">
-						<button>ĐĂNG KÝ</button>
-					</div>
-				</div>
-				<div class="social">
-					<p>Kết nối với chúng tôi</p>
-					<div class="social-icons">
-						<a href="#"><i class="fab fa-facebook-f"></i></a>
-						<a href="#"><i class="fab fa-youtube"></i></a>
-					</div>
-					<hr>
-				</div>
-			</div>
-			<div class="footer-content">
-				<div class="footer-column">
-					<h3>CÔNG TY NỘI THẤT BAYA</h3>
-					<ul>
-
-						<li>
-							Thương hiệu nội thất và trang trí hàng đầu Việt Nam, góp phần xây dựng thêm nhiều tổ ấm mỗi
-							ngày.
-						</li>
-						<li>
-							<i class="fa-solid fa-location-dot"></i> Tầng 08, Tòa nhà Pearl Plaza, Số 561A
-							Điện Biên
-							Phủ,
-							Phường 25, Quận Bình Thạnh, Thành phố Hồ
-							Chí Minh
-						</li>
-						<li><i class="fa-solid fa-phone"></i> 1900 63 64 76</li>
-						<li><i class="fa-solid fa-envelope"></i> webshop@baya.vn</li>
-					</ul>
-				</div>
-				<div class="footer-column">
-					<h3>VỀ BAYA</h3>
-					<ul>
-						<li><a href="introduce.html"><i class="fa-solid fa-circle icon-small"></i>Giới thiệu</a></li>
-						<li><a href="contact.html"><i class="fa-solid fa-circle icon-small"></i>Liên hệ</a></li>
-						<li><a href="#"><i class="fa-solid fa-circle icon-small"></i>Blog</a></li>
-						<li><a href="#"><i class="fa-solid fa-circle icon-small"></i>Hệ thống cửa hàng</a></li>
-					</ul>
-				</div>
-				<div class="footer-column">
-					<h3>HỖ TRỢ KHÁCH HÀNG</h3>
-					<ul>
-						<li><a href="#"><i class="fa-solid fa-circle icon-small"></i>Câu hỏi thường gặp</a></li>
-						<li><a href="#"><i class="fa-solid fa-circle icon-small"></i>Hướng dẫn đặt hàng</a></li>
-						<li><a href="#"><i class="fa-solid fa-circle icon-small"></i>Mua hàng trả góp</a></li>
-						<li>
-							<a href="#"><i class="fa-solid fa-circle icon-small"></i>Hướng dẫn thanh toán VNPAY-QR</a>
-						</li>
-					</ul>
-				</div>
-				<div class="footer-column">
-					<h3>CHÍNH SÁCH</h3>
-					<ul>
-						<li><a href="#"><i class="fa-solid fa-circle icon-small "></i>Chính sách bảo hành</a></li>
-						<li><a href="#"><i class="fa-solid fa-circle icon-small"></i>Chi phí vận chuyển</a></li>
-						<li>
-							<a href="#"><i class="fa-solid fa-circle icon-small"></i>Chính sách đổi trả và hoàn tiền</a>
-						</li>
-						<li><a href="#"><i class="fa-solid fa-circle icon-small"></i>Chính sách vận chuyển</a></li>
-						<li><a href="#"><i class="fa-solid fa-circle icon-small"></i>Các hình thức thanh toán</a></li>
-						<li>
-							<a href="#"><i class="fa-solid fa-circle icon-small"></i>Chính sách bảo mật thông tin</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="footer-bottom">
-				<p>Copyright © 2024 Baya. Powered by Nhóm 1</p>
-			</div>
-		</div>
+		@Html.Partial("Footer")
 		<!-- end footer  -->
 	</div>
 	<div class="modal" id="modal">
@@ -424,10 +297,12 @@
 
 			.then(function(data) { 
 				console.log('Dữ liệu nhận được:', data);
+				
+				
 					console.log('da in ra' +data.products);
 						data.products.forEach(function(product) {
 							 var productHTML =
-						'<div class="product_card" onchange=" goToProDetail(\'' + product.productId + '\')">' +
+						'<div class="product_card" onclick=" goToProDetail(\'' + product.productId + '\')">' +
 						'<div class="card_image">' +
 						'<img src="' + product.thumbnail + '" alt="product">' +
 						'</div>' +
@@ -457,7 +332,7 @@
 					 var updateNumberProduct = document.querySelectorAll('.product_card').length
 					 console.log(updateNumberProduct)
 
-					if(updateNumberProduct%20 !=0){
+					if(updateNumberProduct%20 !=0 ){
 						document.getElementById('see_more-product').style.display ='none'
 						return
 					}
@@ -516,13 +391,14 @@
 			.then(function(data) {
 				console.log('Dữ liệu nhận được:', data);
 					console.log('da in ra' +data.products);
+					
 					productContainer.innerHTML = '';
 
 
 
 					data.products.forEach(function(product) {
 							 var productHTML =
-						'<div class="product_card" onchange=" goToProDetail(\'' + product.productId + '\')">' +
+						'<div class="product_card" onclick=" goToProDetail(\'' + product.productID + '\')">' +
 						'<div class="card_image">' +
 						'<img src="' + product.thumbnail + '" alt="product">' +
 						'</div>' +

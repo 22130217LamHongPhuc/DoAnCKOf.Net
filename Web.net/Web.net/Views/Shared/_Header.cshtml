@@ -1,0 +1,70 @@
+﻿<div class="header">
+    <div class="header_main">
+
+
+        <div class="header_logo">
+            <a href="index.html"><img src="~/assets/images/logo/logo-final (3) (1).png" alt="logo"> </a>
+        </div>
+        <div href="" class="header_item item_category " onclick="openCategory()">
+
+            <div class="item_box ">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            <div class="item_content">
+                <p>Danh mục</p>
+            </div>
+
+        </div>
+
+        <form class="header_search" asp-controller="Search" asp-action="Index" method="get">
+            <button type="submit" class="search_box search_box_color">
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+            </button>
+
+            <input type="text" class="search_input " id="keySearch" value="@ViewBag.key" name="keySearch" placeholder="Bạn tìm gì...">
+
+
+
+
+        </form>
+
+        <!-- item header -->
+
+        <a class="header_item" onclick="goToCart()">
+            <div class="item_box ">
+                <i class="fa-solid fa-cart-shopping"></i>
+            </div>
+            <div class="item_content">
+                <p>Giỏ hàng</p>
+            </div>
+        </a>
+
+        <a href="login.html" class="header_item">
+
+            <div class="item_box ">
+                <i class="fa-regular fa-user color-while"></i>
+            </div>
+            <div class="item_content">
+                <p>Đăng nhập</p>
+            </div>
+
+        </a>
+        <a href="storeAddress.html" class="header_address ">
+            <div class="address_alpha">
+                <div class="item_box ">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div class="item_content">
+                    <p>Tp. Hồ Chí Minh</p>
+                </div>
+            </div>
+
+            <div class="item_box address_beta ">
+                <i class="fa-solid fa-angle-right"></i>
+            </div>
+        </a>
+
+
+    </div>
+</div>

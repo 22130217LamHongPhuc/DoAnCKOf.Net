@@ -29,74 +29,7 @@
 <body>
     <div class="container">
 
-        <div class="header">
-            <div class="header_main">
-
-
-                <div class="header_logo">
-                    <a href="index.html"><img src="./assets/images/logo/logo-final (3) (1).png" alt="logo"> </a>
-                </div>
-                <div href="" class="header_item item_category " onclick="openCategory()">
-
-                    <div class="item_box ">
-                        <i class="fa-solid fa-bars"></i>
-                    </div>
-                    <div class="item_content">
-                        <p>Danh mục</p>
-                    </div>
-
-                </div>
-
-                <div class="header_search">
-                    <button type="submit" class="search_box search_box_color">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-
-                    </button>
-
-                    <input type="text" class="search_input " placeholder="Bạn tìm gì...">
-
-
-                </div>
-
-                <!-- item header -->
-
-                <a href="cart.html" class="header_item">
-                    <div class="item_box ">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </div>
-                    <div class="item_content">
-                        <p>Giỏ hàng</p>
-                    </div>
-                </a>
-
-                <a href="login.html" class="header_item">
-
-                    <div class="item_box ">
-                        <i class="fa-regular fa-user color-while"></i>
-                    </div>
-                    <div class="item_content">
-                        <p>Đăng nhập</p>
-                    </div>
-
-                </a>
-                <a href="storeAddress.html" class="header_address ">
-                    <div class="address_alpha">
-                        <div class="item_box ">
-                            <i class="fa-solid fa-location-dot"></i>
-                        </div>
-                        <div class="item_content">
-                            <p>Tp. Hồ Chí Minh</p>
-                        </div>
-                    </div>
-
-                    <div class="item_box address_beta ">
-                        <i class="fa-solid fa-angle-right"></i>
-                    </div>
-                </a>
-
-
-            </div>
-        </div>
+        @Html.Partial("_Header")
         <!-- end header  -->
 
 
@@ -246,19 +179,7 @@
                             </div>
 
                         </div>
-                        <div class="product_rate alpha bg-while  magin-bottom">
-                            <a class="btn_view buy_now" href="reviews.html">
-
-                                <p>
-                                    Xem
-                                    đánh giá
-                                </p>
-                            </a>
-
-                            <a class="btn_rate buy_now" href="writeReview.html">
-                                <p>Viết đánh giá</p>
-                            </a>
-                        </div>
+                        
 
 
                     </div>
@@ -272,36 +193,8 @@
                             <p class="price-old">@prod.FormatPrice(@prod.Price) <sup></sup></p>
                             <p class="price-percent">@prod.DiscountDefault%</p>
 
-
                         </div>
-                        <div class="block_promotion">
-                            <div class="promotion_name">
-                                <p>Khuyến mãi</p>
-                                <p>Giá và khuyến mãi dự kiến áp dụng đến 23:59 | 30/11</p>
-                            </div>
-                            <div class="promotion_item">
-                                <div class="item_content">
-                                    <i class="fa-solid fa-circle"></i>
-                                    <p>
-                                        Nhập mã SOFAFT200 giảm lên đến 200,000đ (áp dụng cho các sản phẩm thuộc
-                                        SOFA)
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="promotion_item">
-                                <div class="item_content">
-                                    <i class="fa-solid fa-circle"></i>
-                                    <p>Nhập mã XMAS10 để nhận ưu đãi giảm giá lên đến 20% nhân dịp Giáng Sinh!</p>
-                                </div>
-                            </div>
-                            <div class="promotion_item">
-                                <div class="item_content">
-                                    <i class="fa-solid fa-circle"></i>
-                                    <p>Nhập mã TET20 để nhận ưu đãi giảm giá lên đến 20% chào đón Tết Nguyên Đán! </p>
-                                </div>
-                            </div>
-
-                        </div>
+                        
                         <div class="block_buy">
                             <a class="btn_add-cart buy_now" href="cart.html">
                                 <i class="fa-solid fa-cart-plus"></i>
@@ -330,84 +223,7 @@
 
 
         <!-- footer  -->
-        <div class="footer">
-            <div class="footer-top">
-                <div class="newsletter">
-                    <p>Đăng ký nhận tin</p>
-                    <div class="newsletter-input">
-                        <input type="email" placeholder="Nhập email của bạn">
-                        <button>ĐĂNG KÝ</button>
-                    </div>
-                </div>
-                <div class="social">
-                    <p>Kết nối với chúng tôi</p>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
-                    <hr>
-                </div>
-            </div>
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>CÔNG TY NỘI THẤT BAYA</h3>
-                    <ul>
-
-                        <li>
-                            Thương hiệu nội thất và trang trí hàng đầu Việt Nam, góp phần xây dựng thêm nhiều tổ ấm mỗi
-                            ngày.
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-location-dot"></i> Tầng 08, Tòa nhà Pearl Plaza, Số 561A
-                            Điện Biên
-                            Phủ,
-                            Phường 25, Quận Bình Thạnh, Thành phố Hồ
-                            Chí Minh
-                        </li>
-                        <li><i class="fa-solid fa-phone"></i> 1900 63 64 76</li>
-                        <li><i class="fa-solid fa-envelope"></i> webshop@baya.vn</li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>VỀ BAYA</h3>
-                    <ul>
-                        <li><a href="introduce.html"><i class="fa-solid fa-circle icon-small"></i>Giới thiệu</a></li>
-                        <li><a href="contact.html"><i class="fa-solid fa-circle icon-small"></i>Liên hệ</a></li>
-                        <li><a href="#"><i class="fa-solid fa-circle icon-small"></i>Blog</a></li>
-                        <li><a href="#"><i class="fa-solid fa-circle icon-small"></i>Hệ thống cửa hàng</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>HỖ TRỢ KHÁCH HÀNG</h3>
-                    <ul>
-                        <li><a href="#"><i class="fa-solid fa-circle icon-small"></i>Câu hỏi thường gặp</a></li>
-                        <li><a href="#"><i class="fa-solid fa-circle icon-small"></i>Hướng dẫn đặt hàng</a></li>
-                        <li><a href="#"><i class="fa-solid fa-circle icon-small"></i>Mua hàng trả góp</a></li>
-                        <li>
-                            <a href="#"><i class="fa-solid fa-circle icon-small"></i>Hướng dẫn thanh toán VNPAY-QR</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>CHÍNH SÁCH</h3>
-                    <ul>
-                        <li><a href="#"><i class="fa-solid fa-circle icon-small "></i>Chính sách bảo hành</a></li>
-                        <li><a href="#"><i class="fa-solid fa-circle icon-small"></i>Chi phí vận chuyển</a></li>
-                        <li>
-                            <a href="#"><i class="fa-solid fa-circle icon-small"></i>Chính sách đổi trả và hoàn tiền</a>
-                        </li>
-                        <li><a href="#"><i class="fa-solid fa-circle icon-small"></i>Chính sách vận chuyển</a></li>
-                        <li><a href="#"><i class="fa-solid fa-circle icon-small"></i>Các hình thức thanh toán</a></li>
-                        <li>
-                            <a href="#"><i class="fa-solid fa-circle icon-small"></i>Chính sách bảo mật thông tin</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>Copyright © 2024 Baya. Powered by Nhóm 1</p>
-            </div>
-        </div>
+        @Html.Partial("Footer")
         <!-- end footer  -->
     </div>
     <div class="modal" id="modal">
@@ -501,10 +317,90 @@
             </div>
         </div>
     </div>
+    <script>
+                function showContent(number) {
+
+            var contentBlog = document.getElementById('content_blog');
+            var contentBlogRating = document.getElementById('content_blog-rating');
+            if (number === 1) {
+                contentBlog.style.display = 'block'
+                contentBlogRating.style.display = 'none'
+
+            } else {
+                contentBlogRating.style.display = 'block';
+                contentBlog.style.display = 'none';
+
+            }
+        }
+    </script>
+
+    <script>
+         var imgFeature = document.querySelector('.img-feature');
+        var listImg = document.querySelectorAll('.list_img img');
+        var btnPre = document.querySelector('.img_control-previous');
+        var btnNext = document.querySelector('.img_control-next');
+        var currentIndex = 0
+        listImg.forEach((imgElement, index) => {
+            imgElement.addEventListener('click', e => {
+                updateImgByIndex(index)
+            });
+        });
+        function updateImgByIndex(index) {
+            //remove active class
+            document.querySelectorAll('.list_img div').forEach(item => {
+                item.classList.remove('active')
+            }
 
 
+            )
+            currentIndex = index
+            imgFeature.src = listImg[index].getAttribute('src');
+            listImg[index].parentElement.classList.add('active')
+
+        }
+        btnPre.addEventListener('click', e => {
+            if (currentIndex == 0) {
+                currentIndex = listImg.length - 1
+            } else {
+                currentIndex--
+            }
+            updateImgByIndex(currentIndex)
+
+
+
+        })
+        btnNext.addEventListener('click', e => {
+            if (currentIndex == listImg.length - 1) {
+                currentIndex = 0
+            } else {
+                currentIndex++
+            }
+            updateImgByIndex(currentIndex)
+        }
+
+        )
+        updateImgByIndex(0)
+
+        // xu li js cho thong so ki thuat va noi dung
+        function showContent(number) {
+
+            var contentBlog = document.getElementById('content_blog');
+            var contentBlogRating = document.getElementById('content_blog-rating');
+            if (number === 1) {
+                contentBlog.style.display = 'block'
+                contentBlogRating.style.display = 'none'
+
+            } else {
+                contentBlogRating.style.display = 'block';
+                contentBlog.style.display = 'none';
+
+            }
+        }
+    </script>
 </body>
-<script src="~/sliderProduct.js"></script>
+
+
+
 <script src="~/assets/js/modal.js"></script>
 
 </html>

@@ -1,6 +1,4 @@
-﻿
-<!DOCTYPE html>
-
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -25,7 +23,14 @@
     <link rel="stylesheet" href="~/assets/css/layout/breadcrumb.css">
     <link rel="stylesheet" href="~/assets/css/layout/modal.css">
 
-
+ 
+  
+    
+    <link rel="stylesheet" href="~/assets/css/pages/productSearch.css">
+   
+  
+  
+   
 
 
 
@@ -34,63 +39,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
 
-    @* <style> *@
-
-    @*     .input_recom-wrap { *@
-    @*         position: relative; *@
-    @*         flex: 1; *@
-    @*         width: 415px  !important; *@
-    @*         margin: 0 25px; *@
-    @*     } *@
-
-
-
-    @*     .search_recom { *@
-    @*         z-index: 1000; *@
-    @*         top: 140%; *@
-    @*         left: 0; *@
-    @*         width: 100%; *@
-    @*         height: fit-content; *@
-    @*         position: absolute; *@
-    @*         background-color: #246fdf; *@
-    @*         display: none; *@
-    @*     } *@
-
-    @*     .header_search:focus-within .search_recom { *@
-    @*         display: block; *@
-    @*     } *@
-
-    @*     .recom_item { *@
-    @*         padding: 15px 20px; *@
-    @*         display: flex; *@
-    @*         height: 20%; *@
-    @*         background-color: #fff; *@
-    @*         color: #0e2238; *@
-    @*     } *@
-
-    @*         .recom_item p { *@
-    @*             color: #0e2238 !important; *@
-    @*         } *@
-
-    @*     .header_search { *@
-    @*         width: 100% !important; *@
-    @*         height: 100% !important; *@
-    @*         margin-left: 0 !important; *@
-    @*         margin-right: 0 !important; *@
-    @*     } *@
-    @*     /*.recom_item p {*/ *@
-    @*     /*  color: var(--color-black);*/ *@
-    @*     /*  margin: auto 0;*/ *@
-    @*     /*}*/ *@
-
-    @*     .recom_item:hover { *@
-    @*         cursor: pointer; *@
-    @*         background-color: rgb(239, 239, 239); *@
-    @*         color: var(--main_bg); *@
-    @*     } *@
-    @* </style> *@
 
 
 
@@ -114,7 +63,6 @@
                 </div>
 
             </div>
-            <div class="input_recom-wrap" id="input_recom-wrap">
 
             <form class="header_search" asp-controller="Search" asp-action="Index" method="get">
                 <button type="submit" class="search_box search_box_color">
@@ -123,78 +71,19 @@
                 </button>
 
                 <input type="text" class="search_input " id="keySearch" name="keySearch" placeholder="Bạn tìm gì...">
-                <div class="search_recom" id="search_recom">
-                </div>
+                
+               
 
 
             </form>
 
-           
-            </div>
-            <script>
-                document.getElementById("keySearch").addEventListener("input", function() {
-                    var searchRecom = document.getElementById('searchRecom')
-
-                    console.log('da chay vao function')
-                    let query = this.value.trim();
-
-
-
-
-
-                    fetch("/searchRecom?keyword=" + query, {
-                        method: 'GET',
-                        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                    })
-                        .then(function (response) {
-                            return response.json();
-                        })
-                        .then(function (data) {
-
-
-
-                            //hien thi ra item tu json do
-                            console.log('chay vao trong fetch');
-                            console.log(data); // Danh sách gợi ý từ API
-
-                            // Xóa nội dung cũ trước khi thêm mới
-
-
-                            // Hiển thị danh sách gợi ý
-                            var result = "";
-                            for (var i = 0; i < data.list.length; i++) {
-                                var item = data.list[i];
-                                console.log('hien thi item ' + item);
-
-                                // Sử dụng chuỗi thông thường để nối
-                                var html = '<a class="recom_item" href="https://www.youtube.com/watch?v=5SdRX36FECY">' +
-                                    '<p>' + item + '</p>' +
-                                    '</a>';
-                                console.log(html);
-                                result += html;
-                            }
-
-                            // document.getElementById('search_recom').insertAdjacentHTML('beforeend', result);
-                            document.getElementById('search_recom').innerHTML = result;
-                        })
-
-
-                        .catch(function (error) {
-                            console.error('Lỗi:', error);
-                            alert('Đã xảy ra lỗi, vui lòng thử lại.');
-
-
-                        });
-                })
-
-            </script>
             <!-- item header -->
 
             <a class="header_item" onclick="goToCart()">
                 <div class="item_box ">
                     <i class="fa-solid fa-cart-shopping"></i>
                 </div>
-                <div class="item_content" >
+                <div class="item_content">
                     <p>Giỏ hàng</p>
                 </div>
             </a>
@@ -318,7 +207,7 @@
             window.location.href = '/Cart/getCart'
         }
 
-        
+
     </script>
 
     @if (IsSectionDefined("Scripts"))
@@ -328,6 +217,6 @@
 
 
 
-    </body>
+</body>
 
-    </html>
+</html>

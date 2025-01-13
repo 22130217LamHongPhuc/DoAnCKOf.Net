@@ -27,7 +27,7 @@ namespace Web.net.Controllers
             var product = await _searchSevice.GetProductBySearch(keySearch);
             if (product.Count == 0)
             {
-                ViewBag.Message = "Khong co san pham nao";
+                ViewBag.Message = "Không tìm thấy sản phẩm nào";
                 return View("ProductSearch");
             }
 
