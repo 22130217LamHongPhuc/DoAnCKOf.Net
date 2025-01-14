@@ -1,0 +1,194 @@
+﻿@using API.Net.Models
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý sản phẩm</title>
+
+    <!-- Reset CSS -->
+    <link rel="stylesheet" href="~/assets/css/admin_reset.css" />
+
+    <!-- Thêm favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/icons/logo2_no_text.svg">
+
+
+    <!-- Nhúng phông chữ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js"
+            integrity="sha512-6sSYJqDreZRZGkJ3b+YfdhB3MzmuP9R7X1QZ6g5aIXhRvR1Y/N/P47jmnkENm7YL3oqsmI6AK+V6AD99uWDnIw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Thêm Datatable-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/4.0.1/css/fixedHeader.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.2.0/css/buttons.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/2.1.0/css/select.dataTables.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/4.0.1/js/fixedHeader.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.datatables.net/select/2.1.0/js/dataTables.select.js"></script>
+    <script src="https://cdn.datatables.net/select/2.1.0/js/select.dataTables.js"></script>
+
+    <!-- Jquery UI-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js" integrity="sha512-MSOo1aY+3pXCOCdGAYoBZ6YGI0aragoQsg1mKKBHXCYPIWxamwOE7Drh+N5CPgGI5SA9IEKJiPjdfqWFWmZtRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/base/jquery-ui.min.css" integrity="sha512-TFee0335YRJoyiqz8hA8KV3P0tXa5CpRBSoM0Wnkn7JoJx1kaq1yXL/rb8YFpWXkMOjRcv5txv+C6UluttluCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/base/theme.min.css" integrity="sha512-lfR3NT1DltR5o7HyoeYWngQbo6Ec4ITaZuIw6oAxIiCNYu22U5kpwHy9wAaN0vvBj3U6Uy2NNtAfiaKcDxfhTg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <!--Micromodal.js-->
+    <script src="https://cdn.jsdelivr.net/npm/micromodal/dist/micromodal.min.js"></script>
+    <link rel="stylesheet" href="~/assets/css/micromodal.css">
+
+    <!--Notyf-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+
+    @RenderSection("Styles", required: true)
+
+    <style>
+        div.container {
+            max-width: 1200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container grid-layout">
+        <div class="header grid-item header-grid">
+            <div class="logo">
+                <img src="/assets/icons/logo_2_white.svg" alt="">
+            </div>
+            <div class="search-func">
+                <div class="fui-input-with-icon">
+                    <input class="input" type="text" placeholder="fastui@gmail.com" />
+                    <span class="icon f-s-12">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="signout">
+                <div class="logout-icon icon-hover">
+                    <i class="fa-solid fa-table-list fa-2x"></i>
+                </div>
+                <div class="logout-icon icon-hover" onclick="toggleNotifi()">
+                    <i class="fa-regular fa-bell fa-2x"></i>
+                </div>
+                <div class="logout-icon icon-hover">
+                    <i class="fa-solid fa-arrow-right-from-bracket fa-2x"></i>
+                </div>
+            </div>
+            <div class="acount-info">
+                <i class="fa-regular fa-circle-user fa-2x"></i>
+                <div class="account-label">
+                    <p class="text text-name"> Tạ Hoàng Phúc</p>
+                    <p class="text text-permission"> Admin</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="sidebar grid-item sidebar-grid">
+            <a href="/admin" class="sidebar-button .has-icon">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-house-user"></i>
+                </div>
+                <p class="text">
+                    Dashboard
+                </p>
+            </a>
+            <a href="/admin/manage-product" class="sidebar-button">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-table-list"></i>
+                </div>
+                <p class="text">
+                    Quản lý sản phẩm
+                </p>
+            </a>
+            <a href="/admin/productcrud" class="sidebar-button">
+                <div class="sidebar-icon">
+                    <i class="fa-regular fa-square-plus"></i>
+                </div>
+                <p class="text">
+                    Thêm sản phẩm
+                </p>
+            </a>
+            <a href="/admin/manage-category" class="sidebar-button">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <p class="text">
+                    Quản lý danh mục
+                </p>
+            </a>
+            <a href="/admin/element" class="sidebar-button">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
+                <p class="text">
+                    Quản lý thành phần
+                </p>
+            </a>
+            <a href="admin_manageorder.html" class="sidebar-button">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-arrow-down-up-across-line"></i>
+                </div>
+                <p class="text">
+                    Quản lý đơn hàng
+                </p>
+            </a>
+            <a href="admin_manageuser.html" class="item5 sidebar-button">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-user-tag"></i>
+                </div>
+                <p class="text">
+                    Quản lý khách hàng
+                </p>
+            </a>
+
+            <a href="/admin/manage-voucher" class="item5 sidebar-button">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-user-tag"></i>
+                </div>
+                <p class="text">
+                    Quản lý Voucher
+                </p>
+            </a>
+
+        </div>
+
+        @RenderBody()
+   </div>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    @RenderSection("Scripts", required: true)
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

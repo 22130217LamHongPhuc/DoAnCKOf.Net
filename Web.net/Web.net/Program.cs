@@ -22,6 +22,9 @@ builder.Services.AddScoped<IVnPayService, VnPayService>();
 
 
 
+// Admin
+builder.Services.AddHttpClient<AdminService>();
+
 builder.Services.AddDistributedMemoryCache();  //  sử dụng bộ nhớ cho session
 
 builder.Services.AddSession(options =>

@@ -1,0 +1,203 @@
+﻿@using API.Net.Models
+@using API.Net.ViewModel
+
+
+@model API.Net.ViewModel.AddProductViewModel
+@{
+    Layout = "AdminLayout";
+}
+
+@{
+    List<Subcategory> subcategories = (List<Subcategory>)ViewBag.Subcategories;
+}
+
+@section Styles {
+    <!-- Kiểu CSS -->
+        <link rel="stylesheet" href="~/assets/css/style.css" />
+        <link rel="stylesheet" href="~/assets/css/admin-ruleset.css">
+        <link rel="stylesheet" href="~/assets/css/basicinput.css">
+        <link rel="stylesheet" href="~/assets/css/UploadImg.css">
+        <link rel="stylesheet" href="~/assets/css/InputViaIcon.css">
+        <link rel="stylesheet" href="~/assets/css/admin_addproduct.css" />
+
+
+    <!-- CKeditor 4 -->
+    <script src="~/assets/ckeditor/ckeditor.js"></script>
+}
+
+@section Scripts {
+<script src="~/assets/js/ckeditorLoadFile.js"></script>
+<script src="~/assets/js/datatable_addproduct.js"></script>
+<script src="~/assets/js/script.js"></script>
+
+    <script>
+        document.getElementById('addSpecification').addEventListener('click', function () {
+            // Lấy số lượng hiện tại
+            var index = document.querySelectorAll('#specificationList .specification-item').length;
+
+            // Tạo HTML cho một mục mới
+            var newItem = `
+                    <div class="specification-item">
+                             <div class="fui-basic-input flex-column gap-6">
+                                       <input id="SubImg_${index}" name="SubImg[${index}]" class="input input-bordered f-s-14"/>
+                               </div>
+                    </div>
+                `;
+
+            // Thêm mục mới vào danh sách
+            document.getElementById('specificationList').insertAdjacentHTML('beforeend', newItem);
+        });
+    </script>
+}
+
+<div class="content grid-item content-grid">
+        <div class="main-grid">
+            <nav class="navbar tag-line _4c _1r">
+                <div class="nav-back-prev">
+                    <div class="breadcumb">
+                        <div class="breadcumb-icon f-s-25">
+                            <i class="fa-regular fa-square-plus"></i>
+                        </div>
+                        <p class="f-bold f-s-25 breadcumb-text"> Thêm sản phẩm </p>
+                    </div>
+                </div>
+                <div class="funcproduct">
+                <button type="submit" form="add_product_form" class="button bg_green f-cl-white"> Thêm </button>
+                </div>
+            </nav>
+            <div class="card _4c _10r">
+            <form id="add_product_form" asp-action="AddProduct" method="post" class="main-grid">
+                    <div class="product-name _4c">
+                        <div class="fui-basic-input flex-column gap-6">
+                            <label asp-for="Name" class="f-bold f-s-14 f-cl-black">Tên sản phẩm</label>
+                            <input asp-for="Name" class="input input-bordered f-s-14" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                <div class="product-price _4c">
+                    <div class="fui-basic-input flex-column gap-6">
+                        <label asp-for="Price" class="f-bold f-s-14 f-cl-black">Giá Sản phẩm</label>
+                        <input asp-for="Price" class="input input-bordered f-s-14" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="product-price-promotion _4c">
+                    <div class="fui-basic-input flex-column gap-6">
+                        <label asp-for="DiscountDefault" class="f-bold f-s-14 f-cl-black">Giá khuyến mãi</label>
+                        <input asp-for="DiscountDefault" class="input input-bordered f-s-14"/>
+                        <span asp-validation-for="DiscountDefault" class="text-danger"></span>
+                    </div>
+                </div>
+                    <div class="poduct-subcategory _2c">
+                        <div class="fui-basic-input flex-column gap-6">
+                            <label asp-for="SubCategoryID" class="f-bold f-s-14 f-cl-black">Danh mục</label>
+                            <select asp-for="SubCategoryID" class="input input-bordered f-s-14">
+                            @foreach (var item in subcategories)
+                            {
+                                <option value="@item.SubcategoryId">@item.Name</option>
+                            }
+                            </select>
+                        <span asp-validation-for="SubCategoryID" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="poduct-quantity _2c">
+                        <div class="fui-basic-input flex-column gap-6">
+                            <label asp-for="QuantityStock" class="f-bold f-s-14 f-cl-black">Số lượng</label>
+                            <input asp-for="QuantityStock" class="input input-bordered f-s-14" />
+                        <span asp-validation-for="QuantityStock" class="text-danger"></span>
+                        </div>
+                    </div>
+                <div class="poduct-quantitySell _2c">
+                    <div class="fui-basic-input flex-column gap-6">
+                        <label asp-for="QuantitySell" class="f-bold f-s-14 f-cl-black">Số lượng đã bán</label>
+                        <input asp-for="QuantitySell" class="input input-bordered f-s-14" />
+                        <span asp-validation-for="QuantitySell" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="poduct-img _2c">
+                    <div class="fui-basic-input flex-column gap-6">
+                        <label asp-for="Thumbnail" class="f-bold f-s-14 f-cl-black">Ảnh sản phẩm</label>
+                        <input asp-for="Thumbnail" class="input input-bordered f-s-14" />
+                        <span asp-validation-for="Thumbnail" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="poduct-dimension _2c">
+                    <div class="fui-basic-input flex-column gap-6">
+                        <label asp-for="Dimensions" class="f-bold f-s-14 f-cl-black">Kích thước</label>
+                        <input asp-for="Dimensions" class="input input-bordered f-s-14" />
+                        <span asp-validation-for="Dimensions" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="poduct-material _2c">
+                    <div class="fui-basic-input flex-column gap-6">
+                        <label asp-for="Material" class="f-bold f-s-14 f-cl-black">Chất liệu</label>
+                        <input asp-for="Material" class="input input-bordered f-s-14" />
+                        <span asp-validation-for="Material" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="poduct-original _2c">
+                    <div class="fui-basic-input flex-column gap-6">
+                        <label asp-for="Original" class="f-bold f-s-14 f-cl-black">Xuất xứ</label>
+                        <input asp-for="Original" class="input input-bordered f-s-14" />
+                        <span asp-validation-for="Original" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="poduct-material _2c">
+                    <div class="fui-basic-input flex-column gap-6">
+                        <label asp-for="Standard" class="f-bold f-s-14 f-cl-black"></label>
+                        <input asp-for="Standard" class="input input-bordered f-s-14" />
+                        <span asp-validation-for="Standard" class="text-danger"></span>
+                    </div>
+                </div>
+                   
+                    <div class="product-description _4c">
+                        <div class="flex-column gap-6">
+                            <label asp-for="Description" class="f-bold f-s-14 f-cl-black">
+                                Mô tả sản phẩm
+                            </label>
+                            <textarea asp-for="Description" class="editor-label" id="editor" cols="30" rows="10"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                <div class="poduct-subimg _4c">
+                    <h3>Thông số kỹ thuật</h3>
+                    <div id="specificationList">
+                    </div>
+                </div>
+
+                <button type="button" id="addSpecification" class="button bg_green f-cl-white">Thêm thông số</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal micromodal-slide" id="add_color" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <header class="modal__header">
+                    <h2 class="modal__title">
+                        Thêm Thông Số
+                    </h2>
+                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                </header>
+                <div class="modal-content-content">
+                    <div class="fui-basic-input" style="width: 100%">
+                        <label for="add_color_type" class="f-bold f-s-14 f-cl-black">Kích hoạt</label>
+                        <select name="add_color_type" id="add_color_type" class="input input-bordered f-s-14" required>
+                        </select>
+                    </div>
+                    <div class="fui-basic-input flex-column gap-6">
+                        <label for="add_color_val" class="f-bold f-s-14 f-cl-black">Giá trị</label>
+                        <input type="text" name="add_color_val" placeholder="Nhập giá trị" class="input input-bordered f-s-14" id="add_color_val" autocomplete="off"/>
+                    </div>
+                    <footer class="modal__footer">
+                        <button class="button bg_green f-cl-white" id="add_color_btn">Cập nhật</button>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
