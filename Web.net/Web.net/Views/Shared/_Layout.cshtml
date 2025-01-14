@@ -28,7 +28,14 @@
     <link rel="stylesheet" href="~/assets/css/layout/breadcrumb.css">
     <link rel="stylesheet" href="~/assets/css/layout/modal.css">
 
-
+ 
+  
+    
+    <link rel="stylesheet" href="~/assets/css/pages/productSearch.css">
+   
+  
+  
+   
 
 
 
@@ -38,9 +45,11 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     
+
 
 
 
@@ -67,16 +76,18 @@
 
             </div>
 
-            <div class="header_search">
+            <form class="header_search" asp-controller="Search" asp-action="Index" method="get">
                 <button type="submit" class="search_box search_box_color">
                     <i class="fa-solid fa-magnifying-glass"></i>
 
                 </button>
 
-                <input type="text" class="search_input " placeholder="Bạn tìm gì...">
+                <input type="text" class="search_input " id="keySearch" name="keySearch" placeholder="Bạn tìm gì...">
+                
+               
 
 
-            </div>
+            </form>
 
             <!-- item header -->
 
@@ -84,7 +95,7 @@
                 <div class="item_box ">
                     <i class="fa-solid fa-cart-shopping"></i>
                 </div>
-                <div class="item_content" >
+                <div class="item_content">
                     <p>Giỏ hàng</p>
                 </div>
             </a>
@@ -208,7 +219,7 @@
             window.location.href = '/Cart/getCart'
         }
 
-        
+
     </script>
 
     @if (IsSectionDefined("Scripts"))
@@ -218,6 +229,6 @@
 
 
 
-    </body>
+</body>
 
-    </html>
+</html>

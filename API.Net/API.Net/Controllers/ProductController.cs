@@ -15,7 +15,7 @@ namespace API.Net.Controllers
         }
 
 
-
+        
 
         [HttpGet]
         public IActionResult GetAll()
@@ -24,7 +24,7 @@ namespace API.Net.Controllers
             return Ok(products);
 
         }
-
+       
 
         [HttpGet("new")]
         public IActionResult GetProductNew()
@@ -33,6 +33,8 @@ namespace API.Net.Controllers
                 .OrderByDescending(p => p.CreateAt).Take(10);
             return Ok(products);
         }
+       
+
 
         [HttpGet("best_seller")]
         public IActionResult GetProductBestSeller()
@@ -54,29 +56,55 @@ namespace API.Net.Controllers
                 .OrderByDescending(p => p.Price).Take(10);
             return Ok(products);
         }
-
-
-
-        [HttpGet("{id}")]
-        public IActionResult GetById(string id)
+        [HttpGet("detail/{idProduct}")]
+        public IActionResult GetProductById(string idProduct)
         {
-            // Lấy một sản phẩm theo ID
-            var product = _context.Products
-             .Include(p => p.Subimages)     
-             .Include(p => p.Subcategory)
-              .Include(p => p.Specification)     
-             .FirstOrDefault(p => p.ProductId == id);
 
-            if (product == null)
+            //var spec = _context.Specifications.Where(s=>s.SpecificationId == idProduct).FirstOrDefault();
+            var product = _context.Products.Where(p=>p.ProductId == idProduct).FirstOrDefault();
+            if(product == null)
             {
                 return NotFound();
             }
 
             return Ok(product);
 
-        }
 
-      
+        }
+        [HttpGet("image/{idProduct}")]
+        public IActionResult GetImageById(string idProduct)
+        {
+            var subImage = _context.Subimages
+                          .Where(i => i.ProductId == idProduct)
+                          // Trả về danh sách các chuỗi (URLs)
+                          .ToList();
+            return Ok(subImage);
+        }
+       
+
+
+
+
+        //    [HttpGet("{id}")]
+        //public IActionResult GetById(string id)
+        //{
+        //    // Lấy một sản phẩm theo ID
+        //    var product = _context.Products
+        //     .Include(p => p.Subimages)     
+        //     .Include(p => p.Subcategory)
+        //      .Include(p => p.Specification)     
+        //     .FirstOrDefault(p => p.ProductId == id);
+
+        //    if (product == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return Ok(product);
+
+        //}
+
+
 
 
     }

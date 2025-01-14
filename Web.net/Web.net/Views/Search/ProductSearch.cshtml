@@ -1,0 +1,457 @@
+﻿@{
+	Layout = null;
+	var productList = ViewBag.Product ;
+		var productCount = ViewBag.Product;  // Kiểm tra và gán số phần tử trong danh sách
+	// Tắt layout cho trang này
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Tất cả sản phẩm</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+	<link rel="stylesheet" href="./assets/css/reset/reset.css">
+	<link rel="stylesheet" href="./assets/fonts/stylesheet.css">
+	<link rel="stylesheet" href="./assets/css/styles.css">
+
+	<link rel="stylesheet" href="./assets/css/pages/home.css">
+	<link rel="stylesheet" href="./assets/css/pages/productDetail.css">
+	<link rel="stylesheet" href="./assets/css/layout/header.css">
+	<link rel="stylesheet" href="./assets/css/pages/productSearch.css">
+	<link rel="stylesheet" href="./assets/css/layout/modal.css">
+	<link rel="stylesheet" href="./assets/css/layout/footer.css">
+	<link rel="stylesheet" href="./assets/css/layout/breadcrumb.css">
+	<link rel="shortcut icon" href="./assets/images/favicons/favicon_logo.png" type="image/x-icon">
+</head>
+<style>
+	.view_more {
+		padding: 15px;
+		width: 400px;
+	}
+
+	select {
+		width: 200px;
+		height: 30px;
+		border-radius: 10px;
+	}
+</style>
+
+<body>
+	<div class="container">
+
+
+		<!-- HEADER  -->
+		@Html.Partial("_Header")
+
+
+		<div class="body_home">
+			<div class="main_container  ">
+				<div class="breadcrumb">
+					<ul>
+						<li> <a href="">Trang chủ</a> </li>
+						<li>/</li>
+						<li><a href="">Tất cả sản phẩm</a></li>
+					</ul>
+				</div>
+
+				<div class="block_product bg-while">
+					<div class="filter-bar">
+						<div class="filter-options">
+							<button class="filter-button">
+								<i class="fa-solid fa-filter"></i>
+								Tất cả sản phẩm
+							</button>
+
+						</div>
+
+
+						<div class="sort-options">
+							<span>Sắp xếp theo:</span>
+							<button class="sort-button active" onclick="sort(1)">Nổi bật</button>
+							<div class="sort-button" onclick="sort(1)">Bán chạy</div>
+							<button class="sort-button" onclick="sort(2)">Giảm giá</button>
+							
+							<button class="sort-button btn_hover-price">
+								<p>Giá </p>
+								<ul>
+									<li onclick="sort(3)">Từ cao đến thấp</li>
+									<li onclick="sort(4)">Từ thấp đến cao</li>
+								</ul>
+
+							</button>
+							<div>
+							</div>
+						</div>
+					</div>
+
+					<div class="product_list sale_list">
+						@if (!string.IsNullOrEmpty(ViewBag.Message as string))
+						{
+							<p style="color: brown">@ViewBag.Message</p>
+
+						}
+
+						@if (ViewBag.Product != null)
+						{
+							@foreach (var pro in ViewBag.Product)
+							{
+								<div class="product_card" onclick="goToProDetail('@pro.ProductId')">
+									<div class="card_image">
+										<img src="@pro.Thumbnail" />
+									</div>
+									<div class="card_tilte">
+										<h4>@pro.Name</h4>
+									</div>
+
+									<p class="card_price-show"> @pro.FormatPrice(@pro.getPriceAfterDiscount()) </p>
+
+									<div class="card_price-discount">
+										<p class="card_price-through">@pro.FormatPrice(@pro.Price) </p>
+										<b>@pro.DiscountDefault %</b>
+									</div>
+
+
+									<div class="card_bottom">
+										<div class="card_vote">
+											<i class="fa-solid fa-star"></i>
+											<p class="magin-right">4.2</p>
+											<p>(
+											<p>187</p>)</p>
+
+										</div>
+										<div class="card_add-cart" data-product-id="@pro.ProductId"
+											 data-name="@pro.Name"
+											 data-price="@pro.Price"
+											 data-discount="@pro.DiscountDefault"
+											 data-thumbnail="@pro.Thumbnail"
+											 data-quality="1">
+											<i class="fa-solid fa-cart-arrow-down"></i>
+
+										</div>
+
+									</div>
+
+								</div>
+
+							}
+						}
+
+
+					</div>
+
+					@if (!string.IsNullOrEmpty(ViewBag.Message as string) || @ViewBag.Product.Count < 20)
+					{
+						<div class="see_more-product" id="see_more-product" style="display:none">
+							<div class="btn_rate buy_now view_more" onclick="loadMoreProduct()">
+								<p>Xem thêm sản phẩm</p>
+							</div>
+						</div>
+
+					}
+					else
+					{
+						<div class="see_more-product" id="see_more-product">
+							<div class="btn_rate buy_now view_more" onclick="loadMoreProduct()">
+								<p>Xem thêm sản phẩm</p>
+							</div>
+						</div>
+					}
+					
+
+				</div>
+			</div>
+		</div>
+
+
+		<!-- footer  -->
+		@Html.Partial("Footer")
+		<!-- end footer  -->
+	</div>
+	<div class="modal" id="modal">
+		<div class="modal_overlay" onclick="closeCategory()">
+		</div>
+		<div class="modal_body-category">
+			<div class="top_menu">
+				<ul>
+					<li>
+						<div class="menu_category" data-category="phong-lam-viec">
+							<p>Phòng làm việc</p>
+							<i class="fa-solid fa-chevron-right"></i>
+						</div>
+					</li>
+					<li>
+						<div class="menu_category" data-category="phong-khach">
+							<p>Phòng khách</p>
+							<i class="fa-solid fa-chevron-right"></i>
+						</div>
+					</li>
+					<li>
+						<div class="menu_category" data-category="phong-ngu">
+							<p>Phòng ngủ</p>
+							<i class="fa-solid fa-chevron-right"></i>
+						</div>
+					</li>
+					<li>
+						<div class="menu_category" data-category="tu-bep">
+							<p>Tủ bếp</p>
+							<i class="fa-solid fa-chevron-right"></i>
+						</div>
+					</li>
+					<li>
+						<div class="menu_category" data-category="phong-an">
+							<p>Phòng ăn</p>
+							<i class="fa-solid fa-chevron-right"></i>
+						</div>
+					</li>
+
+				</ul>
+			</div>
+
+			<div class="sub_category_wrapper">
+				<div class="category_list" id="phong-lam-viec">
+					<a class="category-item" href="productSearch.html">
+
+						<img src="https://product.hstatic.net/200000065946/product/pro_nau_noi_that_moho_ghe_bdc5094c1d0a4520b209c54ea88e10ba_master.jpg"
+							 alt="img">
+						<p>Bàn làm việc</p>
+
+					</a>
+					<a class="category-item" href="productSearch.html">
+
+						<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG-buIdH3shs3NaAiqPwff0BSvhRDRVGKfaA&s"
+							 alt="img">
+						<p>Ghế văn phòng</p>
+
+					</a>
+					<a class="category-item" href="productSearch.html">
+
+						<img src="https://product.hstatic.net/200000065946/product/pro_nau_noi_that_moho_ghe_bdc5094c1d0a4520b209c54ea88e10ba_master.jpg"
+							 alt="img">
+						<p>Tủ-kệ</p>
+
+					</a>
+
+
+				</div>
+				<div class="category_list" id="phong-khach">
+					<a class="category-item" href="productSearch.html">
+
+						<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG-buIdH3shs3NaAiqPwff0BSvhRDRVGKfaA&s"
+							 alt="img">
+						<p>Ghế Sofa</p>
+
+					</a>
+					<a class="category-item" href="productSearch.html">
+
+						<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG-buIdH3shs3NaAiqPwff0BSvhRDRVGKfaA&s"
+							 alt="img">
+						<p>Bàn </p>
+
+					</a>
+				</div>
+				<div class="category_list" id="phong-ngu">
+				</div>
+				<div class="category_list" id="tu-bep">
+				</div>
+				<div class="category_list" id="phong-an">
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="./assets/js/sliderSearchPro.js"></script>
+	<script src="./assets/js/modal.js"></script>
+	<script>
+		function    goToProDetail(id){
+						 var url = "/Products/Detail/"+id;
+			window.location.href = url;
+
+
+			}
+	</script>
+	<script>
+
+			 function loadMoreProduct() {
+				 console.log('da chay vao day')
+					var productContainer = document.querySelector('.product_card').parentNode; 
+			var numberProduct = document.querySelectorAll('.product_card').length;
+			console.log('Số sản phẩm hiện có: ' + numberProduct);
+
+			var keySearch = document.getElementById('keySearch').value;
+			var pageNumber = Math.floor(numberProduct / 20);
+			console.log('Số trang hiện tại: ' + pageNumber);
+
+			console.log('http:localhost:5009/search/' + keySearch +'/'+ 0 +'/' +pageNumber)
+
+			fetch('/Search/LoadProd?keySearch=' + keySearch +'&f=0' +'&pi=' +pageNumber, {           method: 'GET',
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+		})
+			.then(function(response) {
+					 if (!response.ok) {
+			throw new Error('Lỗi: ' + response.status);
+		}
+		return response.json();
+			})
+
+			.then(function(data) { 
+				console.log('Dữ liệu nhận được:', data);
+				
+				
+					console.log('da in ra' +data.products);
+						data.products.forEach(function(product) {
+							 var productHTML =
+						'<div class="product_card" onclick=" goToProDetail(\'' + product.productId + '\')">' +
+						'<div class="card_image">' +
+						'<img src="' + product.thumbnail + '" alt="product">' +
+						'</div>' +
+						'<div class="card_tilte">' +
+						'<h4>' + product.name + '</h4>' +
+						'</div>' +
+						'<p class="card_price-show">' +formatPrice( priceAfterDiscount(product.price ,product.discountDefault )) + ' đ</p>' +
+						'<div class="card_price-discount">' +
+						'<p class="card_price-through">' + formatPrice(product.price) + ' đ</p>' +
+						'<b>' + product.discountDefault + '%</b>' +
+						'</div>' +
+						'<div class="card_bottom">' +
+						'<div class="card_vote">' +
+						'<i class="fa-solid fa-star"></i>' +
+						'<p class="magin-right">' +5 + '</p>' +
+						'<p>(' + product.quanlitySell + ')</p>' +
+						'</div>' +
+						'<div class="card_add-cart">' +
+						'<i class="fa-solid fa-cart-arrow-down"></i>' +
+						'</div>' +
+						'</div>' +
+						'</div>';
+
+					productContainer.insertAdjacentHTML('beforeend', productHTML);
+						});
+
+					 var updateNumberProduct = document.querySelectorAll('.product_card').length
+					 console.log(updateNumberProduct)
+
+					if(updateNumberProduct%20 !=0 ){
+						document.getElementById('see_more-product').style.display ='none'
+						return
+					}
+
+
+			})
+				
+
+
+
+
+
+
+
+			.catch(function(error) {
+				console.error('Lỗi:', error);
+				alert('Đã xảy ra lỗi, vui lòng thử lại.');
+			});
+
+			 }
+		
+
+				function priceAfterDiscount( price,  discount){
+					  return price * (1 - discount / 100);
+
+				}
+
+
+		// Hàm định dạng giá tiền
+		function formatPrice(price) {
+			return price.toLocaleString('vi-VN');
+		}
+	</script>
+	<script>
+		function sort (id){
+			 console.log('da chay vao day')
+			var productContainer = document.querySelector('.product_card').parentNode;
+			var numberProduct = document.querySelectorAll('.product_card').length;
+			console.log('Số sản phẩm hiện có: ' + numberProduct);
+
+			var keySearch = document.getElementById('keySearch').value;
+			var pageNumber = Math.floor(numberProduct / 20);
+			console.log('Số trang hiện tại: ' + pageNumber);
+
+			console.log('/Search/Filter?keySearch=' + keySearch +'&f='+ id +'&pr=' +numberProduct)
+			fetch('/Search/Filter?keySearch=' + keySearch +'&f='+ id +'&pr=' +numberProduct, {           method: 'GET',
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+		})
+			.then(function(response) {
+					 if (!response.ok) {
+			throw new Error('Lỗi: ' + response.status);
+		}
+		return response.json();
+			})
+
+			.then(function(data) {
+				console.log('Dữ liệu nhận được:', data);
+					console.log('da in ra' +data.products);
+					
+					productContainer.innerHTML = '';
+
+
+
+					data.products.forEach(function(product) {
+							 var productHTML =
+						'<div class="product_card" onclick=" goToProDetail(\'' + product.productID + '\')">' +
+						'<div class="card_image">' +
+						'<img src="' + product.thumbnail + '" alt="product">' +
+						'</div>' +
+						'<div class="card_tilte">' +
+						'<h4>' + product.name + '</h4>' +
+						'</div>' +
+						'<p class="card_price-show">' +formatPrice( priceAfterDiscount(product.price ,product.discountDefault )) + ' đ</p>' +
+						'<div class="card_price-discount">' +
+						'<p class="card_price-through">' + formatPrice(product.price) + ' đ</p>' +
+						'<b>' + product.discountDefault + '%</b>' +
+						'</div>' +
+						'<div class="card_bottom">' +
+						'<div class="card_vote">' +
+						'<i class="fa-solid fa-star"></i>' +
+						'<p class="magin-right">' +5 + '</p>' +
+						'<p>(' + product.quanlitySell + ')</p>' +
+						'</div>' +
+						'<div class="card_add-cart">' +
+						'<i class="fa-solid fa-cart-arrow-down"></i>' +
+						'</div>' +
+						'</div>' +
+						'</div>';
+
+					productContainer.insertAdjacentHTML('beforeend', productHTML);
+						});
+
+					 var updateNumberProduct = document.querySelectorAll('.product_card').length
+					 console.log(updateNumberProduct)
+
+					if(updateNumberProduct%20 !=0){
+						document.getElementById('see_more-product').style.display ='none'
+						return
+					}
+
+
+			})
+
+			.catch(function(error) {
+				console.error('Lỗi:', error);
+				alert('Đã xảy ra lỗi, vui lòng thử lại.');
+			});
+
+		}
+
+
+
+
+	</script>
+	<script>
+		
+
+	</script>
+</body>
+
+</html>
+

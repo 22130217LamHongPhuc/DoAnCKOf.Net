@@ -47,4 +47,17 @@ public partial class Product
 
 
     public virtual ICollection<Subimage> Subimages { get; set; } = new List<Subimage>();
+
+
+
+    public int getPriceAfterDiscount()
+
+    {
+
+        double percent = (double) DiscountDefault / 100.0;
+
+        int discount = (int) percent * Price;
+
+        return Price -discount ;
+    }
 }

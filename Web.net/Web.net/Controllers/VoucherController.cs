@@ -10,7 +10,6 @@ namespace Web.net.Controllers
 
         private readonly VoucherService voucherService;
 
-
         public VoucherController(VoucherService orderService)
         {
 
