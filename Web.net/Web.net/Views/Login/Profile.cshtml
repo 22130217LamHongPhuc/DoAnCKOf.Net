@@ -1,0 +1,94 @@
+﻿
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="grid bg-while">
+            <div class="row">
+                <div class="col-md-3 sidebar">
+            <h4 class="username">@Model.FullName</h4>
+            <a class="order" href="/InforOrder/History">
+                <i class="fa-solid fa-money-bill-1-wave icon"
+                            style="color: #63E6BE;"></i>
+                        Lịch sử đơn hàng</a>
+                    <p class="infor-account"><i class="fa-solid fa-address-card icon" style="color: #74C0FC;"></i>
+                        Thông tin tài khoản</p>
+            <a href="/Login/Logout" class="btn-default signout">Đăng Xuất</a>
+                    <div class="points-section">
+                        <p>Tải app để trải nghiệm </p>
+                        <img src="https://via.placeholder.com/100x100.png?text=QR+Code" alt="QR Code">
+                        <div class="mt-3">
+                            <a href="#"><img src="https://via.placeholder.com/100x40.png?text=App+Store"
+                                    alt="App Store"></a>
+                            <a href="#"><img src="https://via.placeholder.com/100x40.png?text=Google+Play"
+                                    alt="Google Play"></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="col-md-9 content">
+                    <h3>Thông tin tài khoản</h3>
+                    <div class="profile-info">
+                        <h5 class="bold">THÔNG TIN CÁ NHÂN</h5>
+                        <form class="">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="name" class="form-label-profile">Họ & Tên</label>
+                            <input type="text" class="form-input-profile" id="name" value="@Model.FullName"
+                                        placeholder="Nhập họ và tên">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label-profile">Số điện thoại</label>
+                            <input type="text" class="form-input-profile" id="phone" value="@Model.PhoneNumber"
+                                        placeholder="Nhập Số điện thoại">
+                                </div>
+                            </div>
+
+                            <div class="gender">
+                            <div class="col-md-6">
+                            <label for="email" class="form-label-profile">Email</label>
+                            <input type="email" class="form-input-profile" id="email" value="@Model.Email"
+                                   placeholder="Nhập Mail của bạn">
+                            </div>
+                            <div class="btn-option">
+                                <button type="submit" class="btn-default save">Lưu</button>
+                                <button type="button" class="btn-default cancel">Hủy</button>
+
+                            </div>
+                        </form>
+                    </div>
+            <div class="form-section">
+                <h5 class="bold">ĐẶT LẠI MẬT KHẨU</h5>
+                @if (ViewBag.Message != null)
+                {
+                    <div class="alert alert-info">
+                        @ViewBag.Message
+                    </div>
+                }
+                <form method="POST" action="/Login/ChangePassword" class="row">
+                    <div class="col-md-4">
+                        <label for="currentPassword" class="form-label-profile">Mật khẩu hiện tại</label>
+                        <input type="password" class="form-input-profile" id="currentPassword" name="currentPassword" placeholder="Mật khẩu hiện tại" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="newPassword" class="form-label-profile">Mật khẩu mới</label>
+                        <input type="password" class="form-input-profile" id="newPassword" name="newPassword" placeholder="Mật khẩu mới" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="confirmNewPassword" class="form-label-profile">Nhập lại mật khẩu mới</label>
+                        <input type="password" class="form-input-profile" id="confirmNewPassword" name="confirmNewPassword" placeholder="Nhập lại mật khẩu mới" required>
+                    </div>
+                    <div class="btn-option">
+                        <button type="submit" class="btn-default save">ĐỔI MẬT KHẨU</button>
+                    </div>
+                </form>
+            </div>
+
+                </div>
+                <!-- footer  -->
+
+            </div>
+</div>

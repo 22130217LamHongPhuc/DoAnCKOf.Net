@@ -1,0 +1,103 @@
+﻿@using API.Net.Models
+@{
+    ViewData["Title"] = "Order History";
+    var orders = ViewBag.Orders as List<Order>;
+}
+
+<div class="grid bg-while">
+    <div class="row">
+        <div class="col-md-3 menu-left">
+            <div class="avatar">
+                <p class="font-weight-bold mt-2">@ViewBag.Fullname</p>
+            </div>
+            <hr>
+            <nav>
+                <a href="/Login/Profile" class=""><i class="fa-regular fa-user-astronaut icon"></i> Tài Khoản Của Tôi</a>
+                <a href="#" class="bold active"><i class="fa-solid fa-list icon"></i> Đơn Mua</a>
+                <a href="#" class=""><i class="fa-solid fa-bell icon"></i> Thông Báo</a>
+            </nav>
+        </div>
+
+        <div class="col-md-9">
+            <div class="order-content">
+                <ul class="mb-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/Order/History">Tất cả</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Order/History?status=1">Đang xử lí</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Order/History?status=2">Đang vận chuyển</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Order/History?status=3">Xác nhận</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Order/History?status=4">Đã hủy</a>
+                    </li>
+                </ul>
+
+                @if (orders != null && orders.Count > 0)
+                {
+                    @foreach (var order in orders)
+                    {
+                        <div class="product">
+                            <div class="des-state">
+                                <span>Sản phẩm:</span>
+                                <label class="state">@order.OrderStatusName</label>
+                            </div>
+
+                            @foreach (var item in order.Items)
+                            {
+                                <div class="product-item">
+                                    <img src="~/assets/images/product/bawl.jpg" alt="Product" class="product-image mr-3">
+                                    <div>
+                                        <p class="name">@item.ProductId</p>
+                                        <span class="quality">Số lượng x @item.Quantity</span>
+                                    </div>
+                                    <div class="ml-auto text-right infor_price">
+                                        <span class="color-default">@item.TotalPrice.ToString("C")</span>
+                                    </div>
+                                </div>
+                            }
+
+                            <hr>
+                            <div class="btn-another">
+                                <button class="btn-review">Đánh Giá</button>
+                                <button class="btn-cancel">Hủy Đơn</button>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>Không có đơn hàng nào.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Lấy tất cả các nút
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        // Lấy tham số status từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status'); // status có thể là 1, 2, 3, 4
+
+        // Xóa class active khỏi tất cả các nút
+        navLinks.forEach(link => link.classList.remove('active'));
+
+        // Thêm class active vào nút tương ứng
+        if (status) {
+            const activeLink = document.querySelector(`.nav-link[href*="status=${status}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+    });
+
+</script>

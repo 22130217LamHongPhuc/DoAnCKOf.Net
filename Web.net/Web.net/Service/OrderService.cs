@@ -30,5 +30,14 @@ namespace Web.net.Service
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<List<Order>> GetOrdersByUserIdAsync(int userId)
+        {
+            var response = await _httpClient.GetAsync($"http://localhost:5009/order/user/{userId}");
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<List<Order>>(content);
+        }
+
     }
 }

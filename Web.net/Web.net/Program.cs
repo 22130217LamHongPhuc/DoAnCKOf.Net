@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpClient<ProductService>();
 builder.Services.AddHttpClient<OrderService>();
 builder.Services.AddHttpClient<VoucherService>();
+builder.Services.AddHttpClient<UserService>();
 
 
 
@@ -43,5 +44,11 @@ app.UseSession();  // Kích hoạt session
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
+app.MapControllerRoute(
+    name: "order-history",
+    pattern: "Order/History",
+    defaults: new { controller = "InforOrder", action = "History" });
 
 app.Run();
