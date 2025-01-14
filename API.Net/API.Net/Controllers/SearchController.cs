@@ -108,7 +108,7 @@ namespace API.Net.Controllers
                     throw new ArgumentException("Không hợp lệ");
             }
         }
-
+        
         // GET: api/<SearchController>
         [HttpGet]
         public IActionResult Get(string keySearch)
