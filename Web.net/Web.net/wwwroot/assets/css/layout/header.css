@@ -1,4 +1,4 @@
-.header {
+﻿.header {
     position: sticky;
     z-index: 1000;
     top: 0;
@@ -140,3 +140,42 @@
 .item_category {
     cursor: pointer;
 }
+
+/* Đảm bảo phần tử cha có vị trí tương đối để định vị dropdown_content */
+.header_item.dropdown {
+    position: relative;
+    cursor: pointer; /* Hiển thị con trỏ khi hover */
+}
+
+    /* Ẩn dropdown_content mặc định */
+    .header_item.dropdown .dropdown_content {
+        display: none; /* Ẩn đi */
+        position: absolute; /* Định vị tuyệt đối so với phần tử cha */
+        top: 100%; /* Đặt ngay dưới phần tử cha */
+        left: 0;
+        background-color: #fff; /* Màu nền trắng */
+        min-width: 160px; /* Chiều rộng tối thiểu */
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Đổ bóng */
+        z-index: 1; /* Đảm bảo luôn hiển thị phía trên các phần tử khác */
+        border-radius: 4px; /* Bo góc (tùy chọn) */
+        padding: 10px 0; /* Khoảng cách trên dưới */
+    }
+
+    /* Hiển thị dropdown_content khi hover vào phần tử cha */
+    .header_item.dropdown:hover .dropdown_content {
+        display: block; /* Hiển thị */
+    }
+
+    /* Định dạng các liên kết bên trong dropdown_content */
+    .header_item.dropdown .dropdown_content a {
+        color: #333; /* Màu chữ */
+        padding: 12px 16px; /* Khoảng cách trong */
+        text-decoration: none; /* Bỏ gạch chân */
+        display: block; /* Hiển thị dạng block */
+        transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền */
+    }
+
+        /* Hiệu ứng khi hover vào liên kết */
+        .header_item.dropdown .dropdown_content a:hover {
+            background-color: #f1f1f1; /* Màu nền khi hover */
+        }

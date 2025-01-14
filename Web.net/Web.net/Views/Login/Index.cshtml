@@ -1,0 +1,165 @@
+﻿@using API.Net.Models
+@{
+    ViewData["Title"] = "Login";
+
+}
+
+<div class="body_home">
+    <div class="form">
+        <div class="block_img">
+            <img src="~/assets/images/logo/logo-baya.png" alt="img">
+            <h1>Đăng nhập</h1>
+        </div>
+
+        <div class="block_line-through">
+            <!--
+            <p>hoặc</p> -->
+            <hr>
+        </div>
+
+        <form class="block_main" action=@Url.Action("SignIn", "Login") method="get">
+            <p>Email: </p>
+            <input type="email" class="bg_form-input" placeholder="Nhập email" name="email">
+
+            <p>Mật khẩu: </p>
+
+            <input type="password" class="bg_form-input" placeholder="Nhập mật khẩu" name="password">
+            <span class="error-message" style="color:red" id="error-password"></span>
+            <a href="forgetPassword.html" class="forget-password">
+                <p>Quên mật khẩu?</p>
+            </a>
+            <button class="btn_submit-form" type="submit">Đăng nhập</button>
+
+            <div class="form_links">
+
+                <p>Bạn chưa có tài khoản? <a href="/SignUp/Index">Đăng ký ngay</a></p>
+
+            </div>
+        </form>
+    </div>
+
+
+
+</div>
+
+
+
+<div class="modal" id="modal">
+    <div class="modal_overlay" onclick="closeCategory()">
+    </div>
+    <div class="modal_body-category">
+        <div class="top_menu">
+            <ul>
+                <li>
+                    <div class="menu_category" data-category="phong-lam-viec">
+                        <p>Phòng làm việc</p>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </li>
+                <li>
+                    <div class="menu_category" data-category="phong-khach">
+                        <p>Phòng khách</p>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </li>
+                <li>
+                    <div class="menu_category" data-category="phong-ngu">
+                        <p>Phòng ngủ</p>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </li>
+                <li>
+                    <div class="menu_category" data-category="tu-bep">
+                        <p>Tủ bếp</p>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </li>
+                <li>
+                    <div class="menu_category" data-category="phong-an">
+                        <p>Phòng ăn</p>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="sub_category_wrapper">
+            <div class="category_list" id="phong-lam-viec">
+                <a class="category-item" href="productSearch.html">
+
+                    <img src="https://product.hstatic.net/200000065946/product/pro_nau_noi_that_moho_ghe_bdc5094c1d0a4520b209c54ea88e10ba_master.jpg"
+                         alt="img">
+                    <p>Bàn làm việc</p>
+
+                </a>
+                <a class="category-item" href="productSearch.html">
+
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG-buIdH3shs3NaAiqPwff0BSvhRDRVGKfaA&s"
+                         alt="img">
+                    <p>Ghế văn phòng</p>
+
+                </a>
+                <a class="category-item" href="productSearch.html">
+
+                    <img src="https://product.hstatic.net/200000065946/product/pro_nau_noi_that_moho_ghe_bdc5094c1d0a4520b209c54ea88e10ba_master.jpg"
+                         alt="img">
+                    <p>Tủ-kệ</p>
+
+                </a>
+
+
+            </div>
+            <div class="category_list" id="phong-khach">
+                <a class="category-item" href="productSearch.html">
+
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG-buIdH3shs3NaAiqPwff0BSvhRDRVGKfaA&s"
+                         alt="img">
+                    <p>Ghế Sofa</p>
+
+                </a>
+                <a class="category-item" href="productSearch.html">
+
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG-buIdH3shs3NaAiqPwff0BSvhRDRVGKfaA&s"
+                         alt="img">
+                    <p>Bàn </p>
+
+                </a>
+            </div>
+            <div class="category_list" id="phong-ngu">
+            </div>
+            <div class="category_list" id="tu-bep">
+            </div>
+            <div class="category_list" id="phong-an">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelector('.block_main').addEventListener('submit', function (event) {
+    event.preventDefault(); // Ngăn chặn gửi form trước khi kiểm tra
+
+    
+    const password = document.querySelector('input[name="password"]').value.trim();
+
+    // Xóa thông báo lỗi cũ
+    document.querySelectorAll('.error-message').forEach(msg => msg.textContent = "");
+
+    let isValid = true;
+
+   
+
+    // Kiểm tra Mật khẩu
+    if (!password) {
+        document.getElementById('error-password').textContent = "Mật khẩu không được để trống.";
+        isValid = false;
+    }
+
+    // Nếu hợp lệ, gửi form
+    if (isValid) {
+        event.target.submit();
+    }
+});
+
+</script>

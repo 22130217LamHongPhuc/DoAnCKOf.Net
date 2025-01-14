@@ -11,12 +11,12 @@
     <link rel="stylesheet" href="~/assets/css/pages/home.css">
     <link rel="stylesheet" href="~/assets/css/styles.css">
     <link rel="stylesheet" href="~/assets/css/layout/basic.css">
-    <link rel="stylesheet" href="./assets/css/pages/form_checkout.css">
-    <link rel="stylesheet" href="./assets/css/pages/productDetail.css">
+    <link rel="stylesheet" href="~/assets/css/pages/form_checkout.css">
+    <link rel="stylesheet" href="~/assets/css/pages/productDetail.css">
     <link rel="stylesheet" href="~/assets/css/pages/cart.css">
-    <link rel="stylesheet" href="./assets/css/pages/inforOrder.css">
+    <link rel="stylesheet" href="~/assets/css/pages/inforOrder.css">
 
-    <link rel="stylesheet" href="./assets/css/pages/method_payment.css">
+    <link rel="stylesheet" href="~/assets/css/pages/method_payment.css">
 
     <link rel="stylesheet" href="~/assets/css/layout/header.css">
     <link rel="stylesheet" href="~/assets/css/pages/reviews.css">
@@ -27,6 +27,10 @@
 
     <link rel="stylesheet" href="~/assets/css/layout/breadcrumb.css">
     <link rel="stylesheet" href="~/assets/css/layout/modal.css">
+    <link rel="stylesheet" href="~/assets/css/pages/login.css">
+    <link rel="stylesheet" href="~/assets/css/pages/order-history.css">
+    <link rel="stylesheet" href="~/assets/css/pages/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
  
   
@@ -63,7 +67,7 @@
 
 
             <div class="header_logo">
-                <a href="index.html"><img src="~/assets/images/logo/logo-final (3) (1).png" alt="logo"> </a>
+                <a href="/"><img src="~/assets/images/logo/logo-final (3) (1).png" alt="logo"> </a>
             </div>
             <div href="" class="header_item item_category " onclick="openCategory()">
 
@@ -99,17 +103,40 @@
                     <p>Giỏ hàng</p>
                 </div>
             </a>
+            @{
+                var fullName = Context.Session.GetString("FullName");
+            }
 
-            <a href="login.html" class="header_item">
 
-                <div class="item_box ">
-                    <i class="fa-regular fa-user color-while"></i>
+            @if (!string.IsNullOrEmpty(fullName))
+            {
+                <div class="header_item dropdown">
+                    <div class="item_box">
+                        <i class="fa-regular fa-user color-while"></i>
+                    </div>
+                    <div class="item_content">
+                        <p>@fullName</p>
+                    </div>
+                    <div class="dropdown_content">
+                        <a href="/Login/Profile">Hồ sơ</a> <br />
+
+                        <a href="/InforOrder/History">Lịch sử đơn hàng</a><br />
+                        <a href="/Login/Logout">Đăng xuất</a>
+                    </div>
                 </div>
-                <div class="item_content">
-                    <p>Đăng nhập</p>
-                </div>
+            }
+            else
+            {
+                <a href="/Login/Index" class="header_item">
+                    <div class="item_box ">
+                        <i class="fa-regular fa-user color-while"></i>
+                    </div>
+                    <div class="item_content">
+                        <p>Đăng nhập</p>
+                    </div>
+                </a>
+            }
 
-            </a>
             <a href="storeAddress.html" class="header_address ">
                 <div class="address_alpha">
                     <div class="item_box ">
