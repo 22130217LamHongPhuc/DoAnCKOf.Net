@@ -47,32 +47,6 @@ var table = new DataTable('#example', {
         topStart: {
             buttons: [
                 'colvis',
-                {
-                    text: 'Mô tả',
-                    className: 'green',
-                    action: function (e, dt, node, config) {
-                        let data = dt.row({ selected: true }).data();
-                        linkDes = data.description;
-                        pid = data.id;
-                        action = updateEle;
-                        loadFileCKEditor(linkDes, pid);
-                    },
-                    enabled: false
-                },
-                {
-                    text: 'Trạng thái',
-                    className: 'red',
-                    action: function (e, dt, node, config) {
-                        var data = dt.rows({ selected: true }).data();
-                        setActive = [];
-                        data.each(function(rowData, index) {
-                            setActive.push(rowData.id);
-                        });
-                        action = delEle;
-                        MicroModal.show('update_id_modal');
-                    },
-                    enabled: false
-                }
             ]
         },
     },

@@ -29,6 +29,16 @@ namespace API.Net.Controllers
             return Ok(await _context.Products.ToListAsync());
         }
 
+        [HttpGet("getOrderDetail/{id}")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsOrderDetail(int id)
+        {
+            var productsWithOrderDetails = await _context.Products
+                .Include(p => p.OrderDetails)
+                .Where(p => p.OrderDetails.Any(od => od.OrderId == id)) 
+                .ToListAsync();
+            return Ok(productsWithOrderDetails);
+        }
+
         [HttpGet("getImg/{id}")]
         public async Task<ActionResult<IEnumerable<Subimage>>> GetImg(string id)
         {
@@ -76,6 +86,24 @@ namespace API.Net.Controllers
                    _context.Subimages.Remove(subImage);
                     success += await _context.SaveChangesAsync();
                 }
+            }
+            if (success > 0)
+            {
+                return Ok();
+            }
+            else return NotFound();
+
+        }
+
+        [HttpPost("upStatus")]
+        public async Task<ActionResult> UpdateOrderStatus(UpdateStatus status)
+        {
+            int success = 0;
+            foreach (int i in status.Arr)
+            {
+                    // _context.Subimages.Remove(subImage);
+                    success += _context.Database.ExecuteSqlRaw("UPDATE orders SET orderStatusID = {0} WHERE orderID = {1}", status.active, i);
+                
             }
             if (success > 0)
             {
