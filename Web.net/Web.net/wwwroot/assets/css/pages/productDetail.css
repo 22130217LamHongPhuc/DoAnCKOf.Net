@@ -30,11 +30,11 @@
 }
 
 
-.product_name h1 {
-    font-size: 20px;
-    text-transform: capitalize;
-    font-weight: bold;
-}
+    .product_name h1 {
+        font-size: 20px !important;
+        text-transform: capitalize !important;
+        font-weight: bold !important;
+    }
 
 .label_orange {
     margin-left: 20px;

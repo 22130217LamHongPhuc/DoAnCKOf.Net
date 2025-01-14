@@ -7,7 +7,7 @@ namespace Web.net.Models
 {
     public class Cart
     {
-        public int fee { get; set; } = 10000;
+        public int fee { get; set; } =0;
         public int discount { get; set; }  = 0;
 
         public Dictionary<string, CartItem> carts { get; set; }
@@ -65,7 +65,7 @@ namespace Web.net.Models
 
         public double TotalPriceCartAddFee()
         {
-            return TotalPriceCart() + 10000;
+            return TotalPriceCart() + fee;
         }
 
         public void SetDiscount(Voucher voucher)

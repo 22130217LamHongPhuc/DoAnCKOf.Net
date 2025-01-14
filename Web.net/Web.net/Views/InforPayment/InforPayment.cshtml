@@ -69,6 +69,30 @@
                                       placeholder="Ghi chú đơn hàng..."></textarea>
                         </div>
 
+                        <div class="container mt-4">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="province" class="form-label">Tỉnh/Thành phố:</label>
+                                    <select id="province" class="form-select">
+                                        <option value="">Chọn Tỉnh/Thành phố</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="district" class="form-label">Quận/Huyện:</label>
+                                    <select id="district" class="form-select" disabled>
+                                        <option value="">Chọn Quận/Huyện</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="ward" class="form-label">Phường/Xã:</label>
+                                    <select id="ward" class="form-select" disabled>
+                                        <option value="">Chọn Phường/Xã</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
                        
                         <button type="button" class="btn-default"  id="btn-continue" onclick="goToMethodPayment()">
                             Tiếp tục đến
@@ -132,6 +156,14 @@
                             <span>Giảm giá</span>
                             <span id="discount-value">
                                     0 đ
+                            </span>
+                        </div>
+
+
+                        <div class="summary-ship">
+                            <span>Phí vận chuyển</span>
+                            <span id="fee-value">
+                                0 đ
                             </span>
                         </div>
                         <div class="summary-total">
@@ -251,4 +283,186 @@
 
     }
 
+
+
+</script>
+
+<script>
+    const apiToken = 'db44e853-cc14-11ef-b1ed-769685acafa5';
+    const baseURL = 'https://dev-online-gateway.ghn.vn';
+    checkFirst = true;
+
+    function loadProvinces() {
+
+        fetch(baseURL + '/shiip/public-api/master-data/province', {
+            method: 'GET',
+            headers: { 'Token': apiToken }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const provinceSelect = document.getElementById('province');
+                data.data.forEach(province => {
+                    const option = document.createElement('option');
+                    option.value = province.ProvinceID;
+                    option.textContent = province.ProvinceName;
+                    provinceSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error loading provinces:', error));
+    }
+
+    function loadDistricts(provinceID) {
+
+        fetch(baseURL + `/shiip/public-api/master-data/district`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Token': apiToken
+            },
+            body: JSON.stringify({ province_id: parseInt(provinceID, 10) })
+        })
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                const districtSelect = document.getElementById('district');
+                districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
+                data.data.forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district.DistrictID;
+                    option.textContent = district.DistrictName;
+                    districtSelect.appendChild(option);
+                    console.log(district.DistrictID + ' ' + district.DistrictName)
+                });
+                districtSelect.disabled = false;
+            })
+            .catch(error => console.error('Error loading districts:', error));
+    }
+
+    function loadWards(districtID) {
+        fetch(baseURL + `/shiip/public-api/master-data/ward`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Token': apiToken
+            },
+            body: JSON.stringify({ district_id: parseInt(districtID, 10) })
+        })
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                const wardSelect = document.getElementById('ward');
+                wardSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>';
+                data.data.forEach(ward => {
+                    const option = document.createElement('option');
+                    option.value = ward.WardCode;
+                    option.textContent = ward.WardName;
+                    wardSelect.appendChild(option);
+                    console.log(ward.WardCode + ' ' + ward.WardName)
+                });
+                wardSelect.disabled = false;
+
+            })
+            .catch(error => console.error('Error loading wards:', error));
+    }
+    function getShippingFee() {
+        const toDistrictID = document.getElementById('district').value;
+        const toWardID = document.getElementById('ward').value;
+        const weight = 25000;
+
+        if (!toDistrictID || !toWardID || !weight) {
+            alert('Vui lòng nhập đầy đủ thông tin!');
+            return;
+        }
+
+        fetch(baseURL + `/shiip/public-api/v2/shipping-order/fee`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Token': apiToken
+            },
+            body: JSON.stringify({
+                from_district_id: 3695,
+                from_ward_code: "90735",
+                to_district_id: parseInt(toDistrictID, 10),
+                to_ward_code: toWardID,
+                weight: parseInt(weight, 10),
+                service_type_id: 2,
+                shop_id: 2509459
+            })
+        })
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                console.log(data.data.total)
+                updateFeeInCart(data.data.total);
+            })
+            .catch(error => {
+                console.error('Error fetching shipping fee:', error);
+            });
+    }
+
+    document.getElementById('province').addEventListener('change', function () {
+        const provinceSelect = document.getElementById('province');
+        const districtSelect = document.getElementById('district');
+        const wardSelect = document.getElementById('ward');
+
+        if (this.value == '') {
+
+            districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
+            districtSelect.disabled = true;
+
+            wardSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>';
+            wardSelect.disabled = true;
+
+        } else {
+            loadDistricts(this.value);
+        }
+    });
+
+    document.getElementById('district').addEventListener('change', function () {
+
+        loadWards(this.value);
+
+    });
+
+    document.getElementById('ward').addEventListener('change', function () {
+        getShippingFee();
+
+    });
+    loadProvinces();
+
+    function updateFeeInCart(fee) {
+
+
+           $.ajax({
+            url: '@Url.Action("UpdateFee", "InforPayment")',
+                type: 'POST',
+                data: {
+                        fee:fee
+                },
+                success: function (response) {
+                if (response.success) {
+                    $('#fee-value').text(fee.toLocaleString() + " đ");
+                    $('.price-detail').text(response.totalPrice.toLocaleString() + "đ")
+                }
+                },
+                error: function () {
+                    alert('Đã có lỗi xảy ra trong quá trình cập nhật!');
+                }
+            });
+        }
+
+
+       
 </script>

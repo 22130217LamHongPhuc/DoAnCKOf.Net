@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Options;
+﻿using ECommerceMVC.Services;
+using Microsoft.Extensions.Options;
+using Web.net.Models;
 using Web.net.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +20,9 @@ builder.Services.AddHttpClient<SearchSevice>()
         return handler;
     });
 
+
+builder.Services.AddHttpClient<ProductReviewService>();
+builder.Services.AddScoped<IVnPayService, VnPayService>();
 
 
 

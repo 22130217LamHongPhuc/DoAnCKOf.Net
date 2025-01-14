@@ -1,0 +1,169 @@
+﻿@using API.Net.Models;
+
+@{
+    var list = ViewBag.Reviews as List<ProductReview>;
+}
+
+
+
+    <div class="body_home">
+        <div class="main_container">
+            <div class="product_name">
+                <h1>@ViewBag.ProductName</h1>
+               <h1>@ViewBag.ProductID</h1>
+
+            </div>
+
+            <div class="product_name_rating">
+                <ul>
+                    <li>
+                        <p>Đã bán :</p>
+                        <p>@ViewBag.QuantitySold</p>
+                    </li>
+                    <li>
+                        <p><i class="fa-solid fa-star"></i></p>
+                        <p>@ViewBag.AverageRating</p>
+                    </li>
+                    
+                </ul>
+            </div>
+
+            <div class="review-container bg-white">
+                <div class="filter-section">
+                    <h2>Filter Reviews</h2>
+                    <div class="filter-options">
+                        <button class="filter-btn active" onclick="filterByStar(0, '@ViewBag.ProductID', this)">All</button>
+                        <button class="filter-btn" onclick="filterByStar(5, '@ViewBag.ProductID', this)">5 ★</button>
+                        <button class="filter-btn" onclick="filterByStar(4, '@ViewBag.ProductID', this)">4 ★</button>
+                        <button class="filter-btn" onclick="filterByStar(3, '@ViewBag.ProductID', this)">3 ★</button>
+                        <button class="filter-btn" onclick="filterByStar(2, '@ViewBag.ProductID', this)">2 ★</button>
+                        <button class="filter-btn" onclick="filterByStar(1, '@ViewBag.ProductID', this)">1 ★</button>
+                    </div>
+                </div>
+
+                <div class="reviews-section">
+                    @if (list != null && list.Any())
+                    {
+                        foreach (var review in list)
+                        {
+                            <div class="review">
+                                <h3>@review.Fullname</h3>
+                                <div class="rating">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        if (i <= review.Rating)
+                                        {
+                                            <span>★</span>
+                                        }
+                                        else
+                                        {
+                                            <span>☆</span>
+                                        }
+                                    }
+                                </div>
+                                <p>@review.Comment</p>
+                                <p class="timestamp">Commented on @review.CreatedAt.ToString("dd/MM/yyyy")</p>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p>No reviews available.</p>
+                    }
+                </div>
+
+                <div class="add-review">
+                    <h3>Add Your Review</h3>
+                    <div>
+                        <div class="form-group">
+                            <label>Your Rating:</label>
+                            <div class="rating-input">
+                                @for (int i = 5; i >= 1; i--)
+                                {
+                                    <input type="radio" id="star@i" name="rating" value="@i" />
+                                    <label for="star@i">★</label>
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="review-text">Your Comment:</label>
+                            <textarea id="review-text" name="review-text" rows="7" required></textarea>
+                        </div>
+                        <button type="button" onclick="comment('@ViewBag.ProductID')" class="send-review-btn">
+                            <i class="fa-solid fa-paper-plane"></i> Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        function comment(idPro) {
+
+            //const notyf = new Notyf();
+
+
+    var rating = document.querySelector('input[name="rating"]:checked');
+    var cmt = $('#review-text').val();
+
+    if (rating == null) {
+        alert('Vui lòng đánh giá sao');
+        return;
+    }
+    if (cmt.length == 0) {
+       alert('Vui lòng nhập nội dung');
+        return;
+    }
+
+   rating = rating.value;
+
+
+    $.ajax({
+
+        url: '/ReviewProduct/Comment',
+        type: 'POST',
+        data: {
+            content: cmt,
+            rating: rating,
+            id: idPro
+        },
+        success: function (response) {
+
+
+            // if (!data.islogin) {
+            //     return;
+            // }
+
+            if (response.success) {
+                const reviewSection = document.querySelector('.reviews-section');
+                let stars = '';
+                for (let i = 1; i <= 5; i++) {
+                    stars += (i <= rating) ? '★' : '☆';
+                }
+
+                const newReview =
+                    '<div class="review">' +
+                    '<h3>' + response.fullName + '</h3>' +
+                    '<div class="rating">' +
+                    stars +
+                    '</div>' +
+                    '<p>' + cmt + '</p>' +
+                    '<p class="timestamp">Đã bình luận vào ' + response.createAt + '</p>' +
+                    '</div>';
+                reviewSection.insertAdjacentHTML('beforeend', newReview);
+
+              //  Reset nội dung sau khi thêm bình luận
+                $('#review-text').val('');
+                $('input[name="rating"]').prop('checked', false);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error('Error:', error);
+            alert('Đã xảy ra lỗi, vui lòng thử lại.');
+        }
+    });
+ }
+
+    </script>
