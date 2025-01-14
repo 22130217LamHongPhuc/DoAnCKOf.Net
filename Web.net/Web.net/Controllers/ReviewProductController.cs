@@ -52,7 +52,7 @@ namespace Web.net.Controllers
 
             bool check=await _Service.CreateCmtAsync(1, id, rating, content);
 
-            if(check) return Json(new { success = true, fullName = "Lam tai", createAt = DateTime.Now.ToString("dd / MM / YYYY") });
+            if(check) return Json(new { success = true, fullName = "Lam tai", createAt = DateTime.Now.ToString("dd / MM / yyyy") });
 
 
             return Json(new { success = false }) ;

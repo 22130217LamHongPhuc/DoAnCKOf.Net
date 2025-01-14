@@ -59,6 +59,8 @@ namespace Web.net.Controllers
             }
             cart.fee = fee;
 
+            HttpContext.Session.SetObject("cart", cart);
+
             return Json(new { success = true, totalPrice = (cart.TotalPriceCartAddFee()-cart.discount)});
 
 

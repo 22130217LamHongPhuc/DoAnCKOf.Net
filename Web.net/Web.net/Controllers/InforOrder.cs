@@ -1,9 +1,6 @@
 ﻿using API.Net.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Mail;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+
 using Web.net.Service;
 
 namespace Web.net.Controllers

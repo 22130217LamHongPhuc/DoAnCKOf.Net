@@ -214,9 +214,13 @@
 
         const buttons = document.querySelectorAll('.card_add-cart');
 
+        var notyf = new Notyf();
+
 
         buttons.forEach(button => {
-            button.addEventListener('click', function () {
+            button.addEventListener('click', function (event) {
+                event.stopPropagation(); // Ngăn sự kiện  lên cha
+
                 console.log('start1')
 
                 var productId = $(this).data("product-id");
@@ -239,7 +243,7 @@
                         quantity: quantity
                     },
                     success: function (response) {
-                        alert(response.message);
+                        notyf.success(response.message);
                     },
                     error: function () {
                         alert('Đã có lỗi xảy ra!');

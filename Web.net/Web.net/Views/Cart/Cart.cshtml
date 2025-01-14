@@ -35,7 +35,7 @@
                             <img src="@c.Thumbnail" alt="Product 1">
                             <div class="product-details">
                                 <h5>@c.Name</h5>
-                                <div class="product-price">@c.PriceAfterDiscount() đ</div>
+                                <div class="product-price">@c.PriceAfterDiscount().ToString("N0") đ</div>
                             </div>
                             <div class="caculator_total">
                                 <div class="quantity-controls">
@@ -43,7 +43,7 @@
                                     <span class="quality-product">@c.Quatity</span>
                                     <button onclick="changeQuatityCartItem(this,true)">+</button>
                                 </div>
-                                <div class="total-price">@c.TotalPriceCartItem() đ</div>
+                                <div class="total-price">@c.TotalPriceCartItem().ToString("N0") đ</div>
                             </div>
                         </div>
                     }
@@ -57,7 +57,7 @@
                     <div class="order-summary">
                         <h4 class="heading_infor">Thông tin đơn hàng</h4>
                         <div class="des-total-price">
-                            <p>Tổng tiền:</p> <span class="total-price-checkout" id="id-total-price-checkout">@cart.TotalPriceCart() đ</span>
+                            <p>Tổng tiền:</p> <span class="total-price-checkout" id="id-total-price-checkout">@cart.TotalPriceCart().ToString("N0") đ</span>
                         </div>
                         <div class="des-tip">
                             <ul class="list-tip">
@@ -106,9 +106,9 @@
                     if (response.success) {
 
                         quantityElement.text(newQuantity+"");
-                        productItem.find('.total-price').text(response.totalpriceitem +"đ");
+                        productItem.find('.total-price').text(response.totalpriceitem.toLocaleString('vi-VN')+ "đ");
 
-            document.getElementById('id-total-price-checkout').innerText = response.totalpricecart+ " đ"
+                        document.getElementById('id-total-price-checkout').innerText = response.totalpricecart.toLocaleString('vi-VN') +"đ"
 
                     } else {
                         alert("Cập nhật số lượng thất bại!");
