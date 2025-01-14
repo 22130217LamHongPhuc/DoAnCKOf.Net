@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 namespace API.Net.Models;
+[Serializable]
 
 public partial class Specification
 {
