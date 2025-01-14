@@ -30,9 +30,9 @@ namespace Web.net.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
-           
 
-            return View("");
+
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Logout()

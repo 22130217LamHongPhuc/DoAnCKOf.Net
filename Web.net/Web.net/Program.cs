@@ -10,6 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpClient<ProductService>();
 builder.Services.AddHttpClient<OrderService>();
 builder.Services.AddHttpClient<VoucherService>();
+builder.Services.AddHttpClient<SearchSevice>();
+
+builder.Services.AddHttpClient<HomeService>();
+builder.Services.AddHttpClient<UserService>();
+
+
 
 builder.Services.AddHttpClient<ProductReviewService>();
 builder.Services.AddScoped<IVnPayService, VnPayService>();
@@ -61,3 +67,8 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+app.MapControllerRoute(
+    name: "order-history",
+    pattern: "Order/History",
+    defaults: new { controller = "InforOrder", action = "History" });

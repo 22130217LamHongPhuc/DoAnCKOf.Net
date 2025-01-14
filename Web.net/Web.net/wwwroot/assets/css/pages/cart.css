@@ -38,14 +38,14 @@ body {
     padding: 1rem 0;
   }
 
-  .btn-remove{
-    background-color: rgb(254, 243, 242);
-    color: rgb(217, 45, 32);
-    padding: 0.3rem 0.5rem;
-    border-radius: 10px;
-    margin-right: 10px;
-    text-decoration: none;
-  }
+.btn-remove {
+    background-color: rgb(254, 243, 242) !important;
+    color: rgb(217, 45, 32) !important;
+    padding: 0.3rem 0.5rem !important;
+    border-radius: 10px !important;
+    margin-right: 10px !important;
+    text-decoration: !important none;
+}
 
   .btn-remove:focus {
     box-shadow: none;

@@ -130,8 +130,8 @@
                         <div class="product_content alpha bg-while">
 
                             <div class="content_name ">
-                                <h3 onclick="showContent(1)">Thông số kĩ thuật</h3>
-                                <h3 onclick="showContent(2)">Bài viết đánh giá</h3>
+                                <h3 onclick="">Thông số kĩ thuật</h3>
+                                <h3 onclick="showContent('@ViewBag.id')">Bài viết đánh giá</h3>
 
 
 
@@ -379,8 +379,8 @@
         }
 
         )
-        updateImgByIndex(0)
 
+        updateImgByIndex(0)
         // xu li js cho thong so ki thuat va noi dung
         function showContent(number) {
 
@@ -395,6 +395,9 @@
                 contentBlog.style.display = 'none';
 
             }
+        }
+
+        function cmt(id){
         }
     </script>
 </body>
