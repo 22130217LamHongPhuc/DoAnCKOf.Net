@@ -40,6 +40,9 @@ namespace Web.net.Controllers
             return View("MethodPayment");
         }
 
+
+
+        [HttpPost]
         public async Task<IActionResult> FinishPayment(string methodPayment)
         {
 
@@ -61,9 +64,17 @@ namespace Web.net.Controllers
 
             if (methodPayment != null && cart!=null)
             {
+
+                if (methodPayment.Equals("vnpay"))
+                {
+                    return RedirectToAction("Index", "PaymentVNPay");
+
+                }
+
                 List<OrderDetail> orders = new List<OrderDetail>();
 
-                foreach(var c in cart.getAllCartItem())
+
+                foreach (var c in cart.getAllCartItem())
                 {
                     orders.Add(new OrderDetail(c.ProductID,c.Quatity,(decimal) c.TotalPriceCartItem())); 
                 }
@@ -100,10 +111,10 @@ namespace Web.net.Controllers
                     await SendMailGoogleSmtp("tailam164@gmail.com", Convert.ToString(userInfo.Email), "Thông Tin Đơn Hàng", CreateOrderEmailBody(order),
                                              "tailam164@gmail.com", "bdnpbtgnmmelluak");
 
-                   
 
-                   
-                    
+
+
+
                     HttpContext.Session.SetObject("order", order);
 
                     Order order2 = HttpContext.Session.GetObject<Order>("order");

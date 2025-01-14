@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Options;
+﻿using ECommerceMVC.Services;
+using Microsoft.Extensions.Options;
+using Web.net.Models;
 using Web.net.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpClient<ProductService>();
 builder.Services.AddHttpClient<OrderService>();
 builder.Services.AddHttpClient<VoucherService>();
+
+builder.Services.AddHttpClient<ProductReviewService>();
+builder.Services.AddScoped<IVnPayService, VnPayService>();
 
 
 
