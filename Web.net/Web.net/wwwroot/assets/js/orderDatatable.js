@@ -32,7 +32,7 @@ var table = new DataTable('#orders', {
                         var data = dt.rows({ selected: true }).data();
                         setActive = [];
                         data.each(function(rowData, index) {
-                            setActive.push(rowData.id);
+                            setActive.push(rowData.orderId);
                         });
                         action = delEle;
                         MicroModal.show('update_status_modal');
@@ -75,10 +75,11 @@ var table = new DataTable('#orders', {
             targets: 4, // Cột đánh giá
             data: 'orderStatusId',
             render: function (data) {
-                if(data === 'Delivered') {
-                    return `<td> <div class="isActive"> Đã Giao </div> </td>`
-                } else if(data === 'Cancelled') return `<td> <div class="deActive"> Đã huỷ </div> </td>`
-                else return data;
+                if(data === 1) {
+                    return `<td> <div class="isActive"> Đang xử lý </div> </td>`;
+                } else if (data === 2) return `<td> <div class="isActive"> Đang vận chuyển </div> </td>`;
+                else if (data === 3) return `<td> <div class="isActive"> Đã giao </div> </td>`;
+                else if (data === 4) return `<td> <div class="deActive"> Đã huỷ </div> </td>`;
             },
             className: 'dt-center'
         },
@@ -151,94 +152,11 @@ table.on('select deselect', function () {
 function openOrderDetailModal(orderID) {
 
     if(orderDetail == null) {
-        orderDetail = new DataTable('#orderdetail', {
-            ajax: {
-                url: '/admin/orderdetail',
-                data: function (d) {
-                    d.orderId = orderID;
-                },
-                dataSrc: function (json) {
-                    return json.orderdetail;
-                },
-            },
-
-            fixedHeader: true,
-            layout: {
-                topStart: {
-                    buttons: [
-                        'colvis',
-                    ]
-                },
-            },
-            select: true,
-            columnDefs: [
-                {
-                    targets: 0,
-                    data: 'img',
-                    render: function (data) {
-                        return `<td style="background-color: #f5f5f5;">
-                            <img src="${data}" style="width:50px; height:auto;">
-                        </td>`;
-                    },
-                    className: 'dt-center'
-                },
-                {
-                    targets: 1,
-                    data: 'name',
-                    className: 'dt-center'
-                },
-                {
-                    targets: 2, // Cột giá
-                    data: 'quantity',
-                    // render: function (data) {
-                    //     return `<td style="color: red;">${data.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>`;
-                    // },
-                    className: 'dt-center  dt-nowrap'
-                },
-                {
-                    targets: 3, // Cột số lượng
-                    data: 'price',
-                    // render: function (data) {
-                    //     const style = data === 0 ? 'background-color: #ffe0e0;' : '';
-                    //     return `<td style="${style}">${data}</td>`;
-                    // },
-                    className: 'dt-center'
-                },
-                {
-                    targets: 4, // Cột đánh giá
-                    data: 'color',
-                    render: function (data) {
-                        if (data === 'Delivered') {
-                            return `<td> <div class="isActive"> Đã Giao </div> </td>`
-                        } else if (data === 'Cancelled') return `<td> <div class="deActive"> Đã huỷ </div> </td>`
-                        else return data;
-                    },
-                    className: 'dt-center'
-                },
-            ],
-            'autoWidth': false,
-            language: {
-                lengthMenu: "Hiển thị _MENU_ mục mỗi trang",
-                zeroRecords: "Không tìm thấy kết quả",
-                info: "Hiển thị trang _PAGE_ của _PAGES_",
-                infoEmpty: "Không có dữ liệu",
-                infoFiltered: "(lọc từ _MAX_ tổng mục)"
-            },
-
-            createdRow: function (row, data, dataIndex) {
-                // Thêm lớp CSS để căn giữa các ô
-                $('td', row).css({
-                    'text-align': 'center',
-                    'vertical-align': 'middle'
-                });
-            }
-        });
-    } else {
-        orderDetail.settings()[0].ajax.data = function (d) {
-            d.orderId = orderID;
-        };
-        orderDetail.ajax.reload();
+        orderDetail = $('#orderdetail').DataTable();
     }
+        orderDetail.clear().draw();
+        addOrder(orderID);
+    
 
     MicroModal.show('show_detail');
 }
@@ -250,8 +168,8 @@ $("#update_id_btn").on('click', function () {
         notyf.error("Cần nhập đủ thông tin");
     } else{
         $.ajax({
-            url: '/admin/orderdetail',
-            type: 'POST',
+            url: '/Admin/UpdateOrder',
+            type: 'GEt',
             data: {
                 active: active,
                 action: action,
@@ -281,3 +199,34 @@ $('table th').resizable({
         $(this).width(ui.size.width);
     }
 });
+
+function addOrder(orderID) {
+    $.ajax({
+        url: '/Admin/GetOrderDetail',
+        type: 'GET',
+        data: {
+            orderId: orderID
+        },
+        success: function (data) {
+            console.log(data)
+            data.orderdetail.forEach(function (product) {
+                
+                product.orderDetails.forEach(function (orderDetailTable) {
+                    orderDetail.row.add([
+                        product.productId,
+                        product.name,
+                        product.price,
+                        orderDetailTable.orderId,
+                        orderDetailTable.quantity,
+                        orderDetailTable.totalPrice
+                    ]).draw();
+
+                    console.log(orderDetailTable);
+                });
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error("Error:", error);
+        }
+    });
+}

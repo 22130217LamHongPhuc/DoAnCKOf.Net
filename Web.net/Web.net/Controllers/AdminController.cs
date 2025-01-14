@@ -8,8 +8,10 @@ using Web.net.Service;
 
 namespace Web.net.Controllers
 {
+ 
     public class AdminController(AdminService adminService) : Controller
     {
+
         private AdminService _adminService = adminService;
 
         [HttpGet]
@@ -133,6 +135,27 @@ namespace Web.net.Controllers
         {
             return View();
 
+        }
+
+        [HttpGet]
+        public async  Task<JsonResult> GetOrderDetail() 
+        {
+            string productId = Request.Query["orderId"].ToString();
+            List<Product> ls = await _adminService.GetOrderProduct(Int32.Parse(productId));
+            return Json(new { success = true, orderdetail = ls });
+        }
+
+
+        [HttpGet]
+        public async Task<JsonResult> UpdateOrder()
+        {
+            string id = Request.Query["id"].ToString();
+            string active = Request.Query["active"].ToString();
+            int realAcive = Int32.Parse(active);
+            int[] numbers = JsonConvert.DeserializeObject<int[]>(id);
+            //List<Product> ls = await _adminService.GetOrderProduct(Int32.Parse(productId));
+            //return Json(new { success = true, orderdetail = ls });
+            return Json(new { success = await _adminService.UpdateOrderStatus(numbers, realAcive)});
         }
 
     }

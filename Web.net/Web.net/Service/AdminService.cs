@@ -98,6 +98,12 @@ namespace Web.net.Service
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<bool> UpdateOrderStatus(int[] id, int active)
+        {
+            var response = await _httpClient.PostAsJsonAsync($"http://localhost:5009/AdminProducts/upStatus", new UpdateStatus { Arr = id, active = active});
+            return response.IsSuccessStatusCode;
+        }
+
 
         public async Task<Product> GetProductByIdAsync(string id)
         {
@@ -206,6 +212,31 @@ namespace Web.net.Service
             }
 
             return new List<Order>();
+        }
+
+        public async Task<List<Product>> GetOrderProduct(int id)
+        {
+            var response = await _httpClient.GetAsync($"http://localhost:5009/AdminProducts/getOrderDetail/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+
+                var json = await response.Content.ReadAsStringAsync();
+
+                Console.WriteLine(json);
+
+
+                var products = System.Text.Json.JsonSerializer.Deserialize<List<Product>>(json, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true // khong phan biet hoa thuong
+                });
+
+                if (products != null)
+                {
+                    return products;
+                }
+            }
+
+            return new List<Product>();
         }
     }
 }

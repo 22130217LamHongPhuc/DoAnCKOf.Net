@@ -41,14 +41,14 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Tên Người dùng</th>
-                        <th>Ngày đặt</th>
+                        <th>Tên người dùng</th>
+                        <th>Ngày giao</th>
                         <th>Địa chỉ</th>
                         <th>Trạng thái</th>
                         <th>Tổng giá</th>
                         <th>Fee</th>
-                        <th>Discount</th>
-                        <th>Chỉnh sửa</th>
+                        <th>Ưu đãi</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
             </table>
@@ -191,8 +191,10 @@
                     <div class="fui-basic-input" style="width: 100%">
                         <label for="update_active_id" class="f-bold f-s-14 f-cl-black">Kích hoạt</label>
                         <select name="update_active_id" id="update_active_id" class="input input-bordered f-s-14" required>
-                            <option value="Delivered">Đã vận chuyển</option>
-                            <option value="Cancelled">Đã huỷ</option>
+                            <option value="1">Đang xử lí</option>
+                            <option value="2">Đang vận chuyển</option>
+                            <option value="3">Đã giao</option>
+                            <option value="4">Đã huỷ</option>
                         </select>
                     </div>
                 </div>
